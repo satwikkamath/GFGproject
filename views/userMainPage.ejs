@@ -108,27 +108,35 @@
 
                     <div class="formContent">
                         <div class="row">
-                            <% doctorData.forEach(element => {%>
-                                
-                                <% let g = element.gender.charAt(0).toUpperCase() + element.gender.slice(1);%>
-                                <div class="col-lg-4 col-md-6 col-sm-12 doctorList">
-                                    <p>Name :Dr.<%= element.name%>
-                                    </p>
-                                    <p>Age :<%= element.age%>
-                                    </p>
-                                    <p>Gender : <%= g%>
-                                    </p>
-                                    <p>Experience :<%= element.experience%>
-                                    </p>
-                                    <p>Area :<%= element.area%>
-                                    </p>
-                                    <p>Specialization :<%= element.specialization%>
-                                    </p>
-                                    <p>Address :<%= element.address%>
-                                    </p>
+                            <% doctorData.forEach(element=> {%>
 
-                                </div>
-                                <% }) %>
+                                <% let g=element.gender.charAt(0).toUpperCase() + element.gender.slice(1);%>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="card">
+                                            <div class="card-body">
+
+
+
+
+                                                <p class="card-text">Name :Dr.<%= element.name%>
+                                                </p>
+                                                <p class="card-text">Age :<%= element.age%>
+                                                </p>
+                                                <p class="card-text">Gender : <%= g%>
+                                                </p>
+                                                <p class="card-text">Experience :<%= element.experience%>
+                                                </p>
+                                                <p class="card-text">Area :<%= element.area%>
+                                                </p>
+                                                <p class="card-text">Specialization :<%= element.specialization%>
+                                                </p>
+                                                <p class="card-text">Address :<%= element.address%>
+                                                </p>
+                                                <a href="#" class="btn btn-success">Schedule Appointment</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
 
                         </div>
                     </div>
