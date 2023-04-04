@@ -80,8 +80,25 @@ app.post("/userSignUp",function(req,res){
             gender:receivedGender,
         })
         user.save();
-        res.render("userLogin",{text: "Your account was succesfully created"});
+        res.render("userLogin",{text: "Your account was succesfully created",passwordFail:false});
     }
+})
+
+
+//User Login
+
+app.post("/userLogin",function(req,res){
+    const email = req.body.email;
+    const pswd = req.body.password;
+    User.findOne({email:email}).then(function(user){
+        if(pswd===user.password){
+            res.render("userMainPage",{doctorData:false,userName:user.name});
+        }
+        else{
+            res.render("userLogin",{passwordFail:true,text:false});
+        }
+
+    })
 })
 
 
