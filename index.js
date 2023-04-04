@@ -30,7 +30,7 @@ app.set("view engine","ejs");
 
 // Main Page
 app.get("/",function(req,res){
-    res.render("userMainPage",{doctorData:[]});
+    res.render("userSignUp",{doctorData:[]});
 })
 
 //citizen login

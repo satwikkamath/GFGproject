@@ -38,7 +38,9 @@
   
   input[type="text"],
   input[type="email"],
-  input[type="password"] {
+  input[type="password"],
+  input[type="number"],
+  .genderInput {
     padding: 10px;
     margin-bottom: 20px;
     border: none;
