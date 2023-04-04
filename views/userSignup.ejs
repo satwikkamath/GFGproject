@@ -12,10 +12,11 @@
 <body>
   <div class="container">
     <div class="form-container">
-      <form action="/userSignUp">
+      <form action="/userSignUp" method="post">
         <h2>Sign Up</h2>
-        <input type="text" placeholder="Full Name" required>
-        <input type="number" placeholder="Age" required>
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="number" name="phno" placeholder="Phone Number" required>
+        <input type="number" name="number" placeholder="Age" required>
         <div class="genderInput">
            
           <input type="radio" id="male" name="gender" value="Male" required>
@@ -23,9 +24,12 @@
           <input type="radio" id="female" name="gender" value="Female" required>
           <label for="female">Female</label>
         </div>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <input type="password" placeholder="Confirm Password" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name ="password" placeholder="Password" required>
+        <input type="password" name ="cpassword" placeholder="Confirm Password" required>
+        <% if(error){ %>
+          <h3>Passwords Do not Match</h3>
+          <% } %>
         <button type="submit">Sign Up</button>
       </form>
     </div>
