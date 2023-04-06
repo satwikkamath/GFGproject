@@ -41,6 +41,7 @@ const userSchema = new mongoose.Schema({
 const appointmentSchema = new mongoose.Schema({
     doctorName: String,
     userName: String,
+    status:String,
     // prescription: String
 })
 
@@ -143,9 +144,9 @@ app.post("/docLogin", function (req, res) {
         if (pswd === user.password) {
               // if password matched
             Appointment.find({ doctorName: doctorName }).then(function (data) {
-                res.render("doctorMainPage", { userName: doctorName, patients:data });
-                // console.log(data);
                 
+                res.render("doctorMainPage", { userName: doctorName, patients:data });
+
             });
         }
         else {
@@ -176,25 +177,33 @@ app.post("/scheduleAppointment",function (req, res) {
     const appointments = new Appointment({
         doctorName: receivedDocName,
         userName: citizenName,
-
+        status:"Pending"
     });
+
     appointments.save();
     
     Appointment.find({userName:citizenName }).then(function (data) {
-
         res.render("userAppointments", { doctors: data, userName: citizenName });
     });
-  
 });
-
 
 app.get("/myAppointments", function(req,res){
     Appointment.find({userName:citizenName }).then(function (data) {
-
         res.render("userAppointments", { doctors: data, userName: citizenName });
     });
 })
 
+app.post("/approveAppointment",function(req,res){
+    const doctorName = req.body.doctorName;
+    const userName = req.body.userName;
+
+    Appointment.replaceOne({doctorName:doctorName, userName:userName},{doctorName:doctorName, userName:userName,status:"Approved"});
+
+    Appointment.find({ doctorName: doctorName }).then(function (data) {
+        res.render("doctorMainPage", { doctorName: doctorName, patients:data });
+    });
+    
+})
 
 app.listen(3000, function () {
     console.log("Server running on port 3000");

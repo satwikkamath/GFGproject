@@ -42,7 +42,8 @@
     </nav>
     <div class="content">
         <div class="text">
-          <h1>Hi Dr. <%= doctorName %> </h1>  
+            <h1>Hi Dr. <%= doctorName %>
+            </h1>
         </div>
         <div class="image"> <img src="doctor.avif" alt="">
         </div>
@@ -50,19 +51,27 @@
     </div>
     <div class="section">
         <h1>My appointments</h1>
-        <div class="container">
-            <% if(patients){ %>
-                <% patients.forEach(element => { %>
-                                  <p> <%= element.userName %></p>          
-                    <%   }); %>
-            <% } else{ %>
-                <p>No appointments</p>
-                <% } %>
-        </div>
-    </div>
-    <div class="section">
 
+        <% if(patients[0]){ %>
+            <% patients.forEach(element=> { %>
+                <%= element.userName%> <br>
+                    <% if(element.status==="Pending" ){ %>
+                        <form action="/approveAppointment" method="post">
+                            <p> Status: Pending </p> <br>
+                            <button type="submit">Approve</button>
+                            <input type="text" name="doctorName" value="<%= element.doctorName%>" hidden id="">
+                            <input type="text" name="userName" value="<%= element.userName%>" hidden id="">
+                        </form>
+                        <% }else{ %>
+                            <p> Status: Approved </p>
+                            <% } %>
+                                <% }); %>
+                                    <% } else{ %>
+                                        <p>No appointments</p>
+                                        <% } %>
     </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
         crossorigin="anonymous"></script>
