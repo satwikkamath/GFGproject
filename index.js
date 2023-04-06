@@ -141,10 +141,11 @@ app.post("/docLogin", function (req, res) {
     Doctor.findOne({ email: email }).then(function (user) {
         doctorName = user.name;
         if (pswd === user.password) {
-            // res.render("doctorMainPage",{userName:doctorName});  // if password matched
-            Appointment.findOne({ doctorName: doctorName }).then(function (data) {
-                res.render("doctorMainPage", { userName: doctorName, patientName: data.userName });
-                // res.render("userMainPage", { doctorName: doctorName, doctorData: false, userName: citizenName });
+              // if password matched
+            Appointment.find({ doctorName: doctorName }).then(function (data) {
+                res.render("doctorMainPage", { userName: doctorName, patients:data });
+                // console.log(data);
+                
             });
         }
         else {
@@ -184,10 +185,6 @@ app.post("/scheduleAppointment",function (req, res) {
         res.render("userAppointments", { doctors: data, userName: citizenName });
     });
   
-
-
-
-
 });
 
 

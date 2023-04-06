@@ -51,9 +51,13 @@
     <div class="section">
         <h1>My appointments</h1>
         <div class="container">
-            <% if(patientName){ %>
-                <%= patientName %>
-            <% } %>
+            <% if(patients){ %>
+                <% patients.forEach(element => { %>
+                                  <p> <%= element.userName %></p>          
+                    <%   }); %>
+            <% } else{ %>
+                <p>No appointments</p>
+                <% } %>
         </div>
     </div>
     <div class="section">
