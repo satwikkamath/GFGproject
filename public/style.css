@@ -49,40 +49,17 @@
     font-size: 16px;
   }
   
-  button[type="submit"] {
-    padding: 10px;
-    margin: 10px;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #4CAF50;
-    color: #fff;
-    cursor: pointer;
-  }
+
   
-  button[type="submit"]:hover {
-    background-color: #3e8e41;
-  }
+
   
   .mainPageButton{
-    padding: 10px;
+  
     margin: 10px;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #4CAF50;
-    color: #fff;
-    cursor: pointer;
-    text-decoration: none;
+
   }
   
-  .mainPageButton:hover {
-    background-color: #3e8e41;
-  }
+
   
   
 

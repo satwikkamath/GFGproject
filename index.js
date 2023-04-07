@@ -65,7 +65,7 @@ app.get("/", function (req, res) {
 
 //citizen login through first page
 app.get("/citizenLogin", function (req, res) {
-    res.render("userLogin", { text: false, passwordFail: false });
+    res.render("userLogin", { text: false, passwordFail: false, notFound:false });
 })
 
 // citizen Sign Up through first page
@@ -96,7 +96,7 @@ app.post("/userSignUp", function (req, res) {
     else {
         User.findOne({ email: receivedEmail }).then(function (data) {
             if (data) {
-                res.render("userLogin", { text: "Account already exists with this Email", passwordFail: false });     // if an account already exists while signing up
+                res.render("userLogin", { text: "Account already exists with this Email", passwordFail: false, notFound:false });     // if an account already exists while signing up
 
             }
             else {
@@ -109,7 +109,7 @@ app.post("/userSignUp", function (req, res) {
                     gender: receivedGender,
                 })
                 user.save();
-                res.render("userLogin", { text: "Your account was succesfully created", passwordFail: false });
+                res.render("userLogin", { text: "Your account was succesfully created", passwordFail: false, notFound:false });
 
             }
 
@@ -124,13 +124,20 @@ app.post("/userLogin", function (req, res) {
     const email = req.body.email;
     const pswd = req.body.password;
     User.findOne({ email: email }).then(function (user) {
+        if(user)
+        {
         citizenName = user.name;
         if (pswd === user.password) {
             res.render("userMainPage", { doctorName: false, doctorData: false, userName: user.name });  // if password matched
         }
         else {
-            res.render("userLogin", { passwordFail: true, text: false });  // if password not matched
+            res.render("userLogin", { passwordFail: true, text: false, notFound:false });  // if password not matched
         }
+    }
+    else{
+        res.render("userLogin", { passwordFail: false, text: false, notFound:true });  // if password not matched
+        
+    }
     })
 })
 
