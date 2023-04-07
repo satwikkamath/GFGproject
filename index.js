@@ -181,10 +181,13 @@ app.post("/scheduleAppointment",function (req, res) {
     });
 
     appointments.save();
+    setTimeout(() => {
+        
+        Appointment.find({userName:citizenName }).then(function (data) {
+            res.render("userAppointments", { doctors: data, userName: citizenName });
+        });
+    }, 1000);
     
-    Appointment.find({userName:citizenName }).then(function (data) {
-        res.render("userAppointments", { doctors: data, userName: citizenName });
-    });
 });
 
 app.get("/myAppointments", function(req,res){
@@ -197,12 +200,17 @@ app.post("/approveAppointment",function(req,res){
     const doctorName = req.body.doctorName;
     const userName = req.body.userName;
 
-    Appointment.replaceOne({doctorName:doctorName, userName:userName},{doctorName:doctorName, userName:userName,status:"Approved"});
-
-    Appointment.find({ doctorName: doctorName }).then(function (data) {
-        res.render("doctorMainPage", { doctorName: doctorName, patients:data });
+    Appointment.replaceOne({doctorName:doctorName, userName:userName},{doctorName:doctorName, userName:userName,status:"Approved"}).then(function(data){
+        console.log(data);
     });
-    
+
+    setTimeout(() => {
+        
+        Appointment.find({ doctorName: doctorName }).then(function (data) {
+            // console.log(data);
+            res.render("doctorMainPage", { doctorName: doctorName, patients:data });
+        });    
+    }, 1000);
 })
 
 app.listen(3000, function () {
