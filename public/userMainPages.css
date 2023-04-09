@@ -68,3 +68,11 @@
 .card-body.container.row{
     height: 60px;
 }
+
+
+/*navbar */
+
+.navbar-brand img{
+    height: 40px;
+    border-radius: 50%;
+}

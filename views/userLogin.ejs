@@ -13,27 +13,30 @@
   <div class="container">
     <div class="form-container">
       <% if(text){ %>
-        <h3>
-          <%= text %>
-        </h3>
+        <div class="alert alert-danger" role="alert"><%= text %></div>
+          
+       
         <% } %>
           <form action="/userLogin" method="post">
             <h2>Login</h2>
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
             <% if(passwordFail){ %>
-              <h3>Wrong Password</h3>
+              
+              <div class="alert alert-danger" role="alert">Wrong Password</div>
               <% } %>
                 
 
                   <button type="submit" class="btn btn-success">Login</button>
           </form>
           <% if(notFound){ %>
-          <h3>No account found with this email.</h3>
-          <h3> Go to Sign Up Page and register first</h3>
+
+          <div class="alert alert-danger" role="alert">No account found with this email. <br>  Go to Sign Up Page and register first <br>
+          </div>
           <form action="/citizenSignup" method="get">
             <button type="submit" class="btn btn-success">Go To Sign Up Page</button>
-          </form>
+          </form>   
+          
           <% } %>
     </div>
   </div>

@@ -197,11 +197,17 @@ app.post("/scheduleAppointment",function (req, res) {
     
 });
 
+// User Appointments
+
+
 app.get("/myAppointments", function(req,res){
     Appointment.find({userName:citizenName }).then(function (data) {
         res.render("userAppointments", { doctors: data, userName: citizenName });
     });
 })
+
+
+// Approving appointment by doctor
 
 app.post("/approveAppointment",function(req,res){
     const doctorName = req.body.doctorName;
@@ -217,7 +223,7 @@ app.post("/approveAppointment",function(req,res){
             // console.log(data);
             res.render("doctorMainPage", { doctorName: doctorName, patients:data });
         });    
-    }, 1000);
+    }, 1000);  // 1 sec delay because data, which was recently saved was not readable 
 })
 
 app.listen(3000, function () {
