@@ -75,7 +75,7 @@ app.get("/citizenSignup", function (req, res) {
 
 //doctor login through first page
 app.get("/doctor", function (req, res) {
-    res.render("docLogin", { passwordFail: false });
+    res.render("docLogin", { text: false });
 })
 
 
@@ -147,6 +147,7 @@ app.post("/docLogin", function (req, res) {
     const email = req.body.email;
     const pswd = req.body.password;
     Doctor.findOne({ email: email }).then(function (user) {
+        if(user){
         doctorName = user.name;
         if (pswd === user.password) {
               // if password matched
@@ -157,7 +158,12 @@ app.post("/docLogin", function (req, res) {
             });
         }
         else {
-            res.render("docLogin", { passwordFail: true });  // if password not matched
+            res.render("docLogin", { text: "Wrong Password" });  // if password not matched
+        }}
+        else
+        {
+            res.render("docLogin", { text: "No account exists with this email" });  // if no account found
+
         }
     })
 
@@ -213,7 +219,7 @@ app.post("/approveAppointment",function(req,res){
     const doctorName = req.body.doctorName;
     const userName = req.body.userName;
 
-    Appointment.replaceOne({doctorName:doctorName, userName:userName},{doctorName:doctorName, userName:userName,status:"Approved"}).then(function(data){
+    Appointment.replaceOne({doctorName:doctorName, userName:userName,status:"Pending"},{doctorName:doctorName, userName:userName,status:"Approved"}).then(function(data){
         console.log(data);
     });
 
