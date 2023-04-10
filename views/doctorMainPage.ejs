@@ -63,8 +63,8 @@
                                     <div class="container">
                                         <%= element.userName%> <br>
                                             <% if(element.status==="Pending" ){ %>
+                                                <p> Status: <%= element.status%> </p> <br>
                                                 <form action="/approveAppointment" method="post">
-                                                    <p> Status: Pending </p> <br>
                                                     <button type="submit" class="btn btn-success">Approve</button>
                                                     <input type="text" name="doctorName"
                                                         value="<%= element.doctorName%>" hidden id="">
@@ -72,8 +72,15 @@
                                                         hidden id="">
                                                 </form>
                                                 <% }else{ %>
-                                                    <p> Status: Approved </p>
+                                                    <p> Status: <%= element.status%> </p>
                                                     <% } %>
+                                                    <form action="/userHistory" method="post">
+                                                        <button type="submit" class="btn btn-success">Get Patient History</button>
+                                                    <input type="text" name="doctorName"
+                                                        value="<%= element.doctorName%>" hidden id="">
+                                                    <input type="text" name="userName" value="<%= element.userName%>"
+                                                        hidden id="">
+                                                    </form>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +89,7 @@
                 </div>
             </div>
             <% } else{ %>
-                <p>No appointments</p>
+                
                 <div class="alert alert-danger" role="alert">Currently, you have no appointments.</div>
                 <% } %>
     </div>

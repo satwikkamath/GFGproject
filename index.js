@@ -232,6 +232,15 @@ app.post("/approveAppointment",function(req,res){
     }, 1000);  // 1 sec delay because data, which was recently saved was not readable 
 })
 
+// patient history
+
+app.post("/userHistory", function(req,res){
+    const userName= req.body.userName;
+    const doctorName= req.body.doctorName;
+    Appointment.find({userName:userName, doctorName:doctorName }).then(function (data) {
+        res.render("patientHistory", { doctors: data, doctorName: doctorName });
+    });
+})
 app.listen(3000, function () {
     console.log("Server running on port 3000");
 })
