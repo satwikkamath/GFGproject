@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
     phoneNumber: Number,
     age: Number,
     gender: String,
+    address:String
 })
 
 const appointmentSchema = new mongoose.Schema({
@@ -87,6 +88,7 @@ app.post("/userSignUp", function (req, res) {
     const receivedEmail = req.body.email;
     const receivedGender = req.body.gender;
     const receivedPhno = req.body.phno;
+    const receivedAddress = req.body.address;
     const receivedPswd = req.body.password;
     const cpswd = req.body.cpassword;
     if (receivedPswd != cpswd) {
@@ -107,6 +109,7 @@ app.post("/userSignUp", function (req, res) {
                     phoneNumber: receivedPhno,
                     age: receivedAge,
                     gender: receivedGender,
+                    address: receivedAddress
                 })
                 user.save();
                 res.render("userLogin", { text: "Your account was succesfully created", passwordFail: false, notFound:false });
@@ -232,6 +235,26 @@ app.post("/approveAppointment",function(req,res){
     }, 1000);  // 1 sec delay because data, which was recently saved was not readable 
 })
 
+// Completing appointment by doctor
+
+app.post("/completedAppointment",function(req,res){
+    const doctorName = req.body.doctorName;
+    const userName = req.body.userName;
+
+    Appointment.replaceOne({doctorName:doctorName, userName:userName,status:"Approved"},{doctorName:doctorName, userName:userName,status:"Complete"}).then(function(data){
+        console.log(data);
+    });
+
+    setTimeout(() => {
+        
+        Appointment.find({ doctorName: doctorName }).then(function (data) {
+            // console.log(data);
+            res.render("doctorMainPage", { doctorName: doctorName, patients:data });
+        });    
+    }, 1000);  // 1 sec delay because data, which was recently saved was not readable 
+})
+
+
 // patient history
 
 app.post("/userHistory", function(req,res){
@@ -240,7 +263,8 @@ app.post("/userHistory", function(req,res){
     Appointment.find({userName:userName, doctorName:doctorName }).then(function (data) {
         res.render("patientHistory", { doctors: data, doctorName: doctorName });
     });
-})
+});
+
 app.listen(3000, function () {
     console.log("Server running on port 3000");
 })

@@ -62,6 +62,7 @@
 
                                     <div class="container">
                                         <%= element.userName%> <br>
+                                        <%= element.address%> <br>
                                             <% if(element.status==="Pending" ){ %>
                                                 <p> Status: <%= element.status%> </p> <br>
                                                 <form action="/approveAppointment" method="post">
@@ -71,9 +72,19 @@
                                                     <input type="text" name="userName" value="<%= element.userName%>"
                                                         hidden id="">
                                                 </form>
-                                                <% }else{ %>
+                                                <% }else if(element.status==="Approved" ){ %>
                                                     <p> Status: <%= element.status%> </p>
-                                                    <% } %>
+                                                    <form action="/completedAppointment" method="post">
+                                                        <button type="submit" class="btn btn-success">Complete</button>
+                                                        <input type="text" name="doctorName"
+                                                            value="<%= element.doctorName%>" hidden id="">
+                                                        <input type="text" name="userName" value="<%= element.userName%>"
+                                                            hidden id="">
+                                                    </form>
+                                                    <% }else{ %>
+                                                        <p> Status: <%= element.status%> </p>
+                                                        <% } %>
+
                                                     <form action="/userHistory" method="post">
                                                         <button type="submit" class="btn btn-success">Get Patient History</button>
                                                     <input type="text" name="doctorName"

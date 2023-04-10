@@ -27,6 +27,13 @@
           <label for="female">Female</label>
         </div>
         <input type="email" name="email" placeholder="Email" required>
+        
+          <textarea name="address" class="" id="validationTextarea" placeholder="Enter Your Address"
+            required></textarea>
+          <div class="invalid-feedback">
+            Address
+          </div>
+          <br>
         <input type="password" name ="password" placeholder="Password" required>
         <input type="password" name ="cpassword" placeholder="Confirm Password" required>
         <% if(error){ %>
