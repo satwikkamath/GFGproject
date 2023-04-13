@@ -175,10 +175,87 @@
 
                           </div>
                       </div>
-                      <input type="hidden" id="custId" name="doctorName" value="<%= element.name %>">
 
-                      <button type="submit" class="btn btn-success">Schedule Appointment</a>
-                        </form>
+
+
+                      <% if(element.schedule[0]){ %>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Date</th>
+                              <th scope="col">Slot 1</th>
+                              <th scope="col">Slot 2</th>
+                              <th scope="col">slot 3</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+
+                            <% element.schedule.forEach(ele=> { %>
+
+                              <tr>
+                                <th scope="row">
+                                  <%= ele.date %>
+                                </th>
+                                <% let Slot1 =ele.date + "slot1" + ele._id %>
+                                <% let Slot2 =ele.date + "slot2" + ele._id %>
+                                <% let Slot3 = ele.date + "slot3" + ele._id  %>
+                                <% if(ele.slot1==="Free" ){ %>
+                                  <td>
+                                    <%= ele.slot1 %>
+                                      <input type="checkbox" name="slot" value = <%= Slot1 %> id="">
+                                  </td>
+                                  <% }else{ %>
+
+                                    <td>
+                                      <%= ele.slot1 %>
+                                    </td>
+                                    <% } %>
+
+
+                                <% if(ele.slot2==="Free" ){ %>
+                                  <td>
+                                    <%= ele.slot2 %>
+                                      <input type="checkbox" name="slot" value = <%= Slot2 %> id="">
+                                  </td>
+                                  <% }else{ %>
+
+                                    <td>
+                                      <%= ele.slot2 %>
+                                    </td>
+                                    <% } %>
+
+                                <% if(ele.slot3==="Free" ){ %>
+                                  <td>
+                                    <%= ele.slot3 %>
+                                      <input type="checkbox" name="slot" value = <%= Slot1 %> id="">
+                                  </td>
+                                  <% }else{ %>
+
+                                    <td>
+                                      <%= ele.slot3 %>
+                                    </td>
+                                    <% } %>
+
+                              </tr>
+                              <% }); %>
+                          </tbody>
+                        </table>
+                        <% }else{ %>
+                          <div class="alert alert-danger" role="alert">The doctor has not updated his/her schedule</div>
+                          <% } %>
+
+
+
+
+
+
+
+
+                            <input type="hidden" id="custId" name="doctorName" value="<%= element.name %>">
+
+                            <button type="submit" class="btn btn-success">Schedule Appointment</a>
+                              </form>
                     </div>
                   </div>
                 </div>
