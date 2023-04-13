@@ -195,6 +195,7 @@
 
                               <tr>
                                 <th scope="row">
+                                  <% if(ele.date) %>
                                   <%= ele.date %>
                                 </th>
                                 <% let Slot1 =ele.date + "slot1" + ele._id %>
@@ -205,7 +206,7 @@
                                     <%= ele.slot1 %>
                                       <input type="checkbox" name="slot" value = <%= Slot1 %> id="">
                                   </td>
-                                  <% }else{ %>
+                                  <% }else if(ele.slot1==="Busy" ){ %>
 
                                     <td>
                                       <%= ele.slot1 %>
@@ -218,7 +219,7 @@
                                     <%= ele.slot2 %>
                                       <input type="checkbox" name="slot" value = <%= Slot2 %> id="">
                                   </td>
-                                  <% }else{ %>
+                                  <% }else if(ele.slot2==="Busy" ){ %>
 
                                     <td>
                                       <%= ele.slot2 %>
@@ -230,7 +231,7 @@
                                     <%= ele.slot3 %>
                                       <input type="checkbox" name="slot" value = <%= Slot3 %> id="">
                                   </td>
-                                  <% }else{ %>
+                                  <% }else if(ele.slot3==="Busy" ){ %>
 
                                     <td>
                                       <%= ele.slot3 %>

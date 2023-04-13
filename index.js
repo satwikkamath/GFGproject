@@ -189,13 +189,48 @@ app.post("/doctorSearch", function (req, res) {
     const receivedArea = req.body.area;
     const receivedSpecialization = req.body.specialization;
 
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth()+1;
+    let date = today.getDate();
+    let completeDate 
+    
+    if(month <10 && date <10 )
+    completeDate = year + "-0" + month + "-0" + date ;
+    else if(month <10 && date >=10 )
+    completeDate = year + "-0" + month + "-" + date ;
+    else if(month >=10 && date <10 )
+    completeDate = year + "-" + month + "-0" + date ;
+    else if(month <10 && date <10 )
+    completeDate = year + "-" + month + "-" + date ;
 
 
 
 
+  
     Doctor.find({ area: receivedArea, specialization: receivedSpecialization }).then(function (doctors) {
 
-        res.render("userMainPage", { doctorName: false, doctorData: doctors, userName: citizenName });
+        doctors.forEach(element => {
+            let gotid=0;
+            element.schedule.forEach(ele => {
+                console.log(ele.date)
+                console.log(completeDate)
+                if(ele.date < completeDate)
+                {   
+                    ele.date = " ";
+                    ele.slot1 = " ";
+                    ele.slot2= " ";
+                    ele.slot3 = " ";
+                }
+                
+            });
+            element.save();
+            
+        });
+        setTimeout(() => {
+            res.render("userMainPage", { doctorName: false, doctorData: doctors, userName: citizenName });
+            
+        }, 1000);
     });
 
 
@@ -253,7 +288,7 @@ app.post("/scheduleAppointment", function (req, res) {
                 }
     })
 
-    console.log(Slot);
+
 
 
 
