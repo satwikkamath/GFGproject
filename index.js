@@ -52,7 +52,8 @@ const appointmentSchema = new mongoose.Schema({
     userName: String,
     status: String,
     date: String,
-    slot: String
+    slot: String,
+    type: String
     // prescription: String
 })
 
@@ -142,7 +143,7 @@ app.post("/userLogin", function (req, res) {
         if (user) {
             citizenName = user.name;
             if (pswd === user.password) {
-                res.render("userMainPage", { doctorName: false, doctorData: false, userName: user.name, docSchedule: false });  // if password matched
+                res.render("userMainPage", { doctorName: false, homeDoctorData: false,  clinicDoctorData: false, userName: user.name, docSchedule: false });  // if password matched
             }
             else {
                 res.render("userLogin", { passwordFail: true, text: false, notFound: false });  // if password not matched
@@ -184,8 +185,8 @@ app.post("/docLogin", function (req, res) {
 })
 
 
-// doctor search
-app.post("/doctorSearch", function (req, res) {
+//Home doctor search
+app.post("/homeDoctorSearch", function (req, res) {
     const receivedArea = req.body.area;
     const receivedSpecialization = req.body.specialization;
 
@@ -211,10 +212,9 @@ app.post("/doctorSearch", function (req, res) {
     Doctor.find({ area: receivedArea, specialization: receivedSpecialization }).then(function (doctors) {
 
         doctors.forEach(element => {
-            let gotid=0;
+            
             element.schedule.forEach(ele => {
-                console.log(ele.date)
-                console.log(completeDate)
+
                 if(ele.date < completeDate)
                 {   
                     ele.date = " ";
@@ -228,7 +228,58 @@ app.post("/doctorSearch", function (req, res) {
             
         });
         setTimeout(() => {
-            res.render("userMainPage", { doctorName: false, doctorData: doctors, userName: citizenName });
+            res.render("userMainPage", { doctorName: false,clinicDoctorData:false, homeDoctorData: doctors, userName: citizenName });
+            
+        }, 1000);
+    });
+
+
+});
+
+// Clinic Doctor Search
+app.post("/clinicDoctorSearch", function (req, res) {
+    const receivedArea = req.body.area;
+    const receivedSpecialization = req.body.specialization;
+
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth()+1;
+    let date = today.getDate();
+    let completeDate 
+    
+    if(month <10 && date <10 )
+    completeDate = year + "-0" + month + "-0" + date ;
+    else if(month <10 && date >=10 )
+    completeDate = year + "-0" + month + "-" + date ;
+    else if(month >=10 && date <10 )
+    completeDate = year + "-" + month + "-0" + date ;
+    else if(month <10 && date <10 )
+    completeDate = year + "-" + month + "-" + date ;
+
+
+
+
+  
+    Doctor.find({ area: receivedArea, specialization: receivedSpecialization }).then(function (doctors) {
+
+        doctors.forEach(element => {
+            
+            element.schedule.forEach(ele => {
+
+                if(ele.date < completeDate)
+                {   
+                    ele.date = " ";
+                    ele.slot1 = " ";
+                    ele.slot2= " ";
+                    ele.slot3 = " ";
+                }
+                
+            });
+            element.save();
+            
+        });
+        setTimeout(() => {
+            res.render("userMainPage", { doctorName: false,homeDoctorData:false, clinicDoctorData: doctors, userName: citizenName });
             
         }, 1000);
     });
@@ -238,9 +289,9 @@ app.post("/doctorSearch", function (req, res) {
 
 
 
-// Scheduling Appointment
+// Scheduling Home Appointment
 
-app.post("/scheduleAppointment", function (req, res) {
+app.post("/scheduleHomeAppointment", function (req, res) {
     const receivedSlot = req.body.slot;
     const receivedDocName = req.body.doctorName;
 
@@ -301,7 +352,8 @@ app.post("/scheduleAppointment", function (req, res) {
         userName: citizenName,
         status: "Pending",
         date: date,
-        slot: Slot
+        slot: Slot,
+        type: "Home"
     });
 
     appointments.save();
@@ -316,6 +368,89 @@ app.post("/scheduleAppointment", function (req, res) {
     }, 1000);
 
 });
+
+
+// Scheduling clinic appointment
+
+
+app.post("/scheduleClinicAppointment", function (req, res) {
+    const receivedSlot = req.body.slot;
+    const receivedDocName = req.body.doctorName;
+
+    const date = receivedSlot.slice(0, 10);
+    const slot = receivedSlot.slice(10, 15);
+    const id = receivedSlot.slice(15,);
+
+    let Slot;
+    if (slot === "slot1")
+        Slot = "Slot 1";
+    else
+        if (slot === "slot2")
+            Slot = "Slot 2";
+        else
+            if (slot === "slot3")
+                Slot = "Slot 3";
+
+    // updating the slots
+    Doctor.findOne({ name: receivedDocName }).then(function (datas) {
+        console.log(datas);
+        let c = -1;
+        let index;
+        datas.schedule.forEach(element => {
+            c++;
+            if (element.date === date)
+                index = c;
+
+        });
+        if (slot === "slot1") {
+            Slot = "Slot 1";
+            datas.schedule[index]["slot1"] = "Busy";
+            datas.save();
+        }
+        else
+            if (slot === "slot2") {
+                Slot = "Slot 2";
+                datas.schedule[index]["slot2"] = "Busy";
+                datas.save();
+            }
+            else
+                if (slot === "slot3") {
+                    Slot = "Slot 3";
+                    datas.schedule[index]["slot3"] = "Busy";
+                    datas.save();
+                }
+    })
+
+
+
+
+
+
+
+
+
+    const appointments = new Appointment({
+        doctorName: receivedDocName,
+        userName: citizenName,
+        status: "Pending",
+        date: date,
+        slot: Slot,
+        type:"Clinic",
+    });
+
+    appointments.save();
+    setTimeout(() => {
+
+        Appointment.find({ userName: citizenName }).then(function (data) {
+            res.render("userAppointments", { doctors: data, userName: citizenName });
+        });
+
+
+
+    }, 1000);
+
+});
+
 
 // User Appointments
 
