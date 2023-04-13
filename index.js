@@ -210,49 +210,55 @@ app.post("/scheduleAppointment", function (req, res) {
     const receivedDocName = req.body.doctorName;
 
     const date = receivedSlot.slice(0, 10);
-    const slot = receivedSlot.slice(10,15);
+    const slot = receivedSlot.slice(10, 15);
     const id = receivedSlot.slice(15,);
 
     let Slot;
-
-    if (slot === "slot1") {
+    if (slot === "slot1")
         Slot = "Slot 1";
-        Schedule.findByIdAndUpdate(id,{slot1:"Busy"}).then(function(data){
-            console.log(data);
-            Doctor.findOne({name:receivedDocName}).then(function(datas){
-                console.log(datas);
-                let c=-1;
-                let index;
-                datas.schedule.forEach(element => {
-                    c++;
-                    if(element.id ===id)
-                        index = c; 
-                    console.log()                  
-                });
-                
-                datas.schedule[index]["slot1"]="Busy";
-                datas.save();
-                
-            })
+    else
+        if (slot === "slot2")
+            Slot = "Slot 2";
+        else
+            if (slot === "slot3")
+                Slot = "Slot 3";
 
-           
-            
+    // updating the slots
+    Doctor.findOne({ name: receivedDocName }).then(function (datas) {
+        console.log(datas);
+        let c = -1;
+        let index;
+        datas.schedule.forEach(element => {
+            c++;
+            if (element.date === date)
+                index = c;
+
         });
-    } else if (slot === "slot2") {
-        Slot = "Slot 2";
-        Schedule.findByIdAndUpdate(id,{slot2:"Busy"}).then(function(data){
-            console.log(data);
-            
-            
-        });
-    } else if (slot === "slot3") {
-        Slot = "Slot 3";
-        Schedule.findByIdAndUpdate(id,{slot3:"Busy"}).then(function(data){
-            console.log(data);
-            
-            
-        });
-    }
+        if (slot === "slot1") {
+            Slot = "Slot 1";
+            datas.schedule[index]["slot1"] = "Busy";
+            datas.save();
+        }
+        else
+            if (slot === "slot2") {
+                Slot = "Slot 2";
+                datas.schedule[index]["slot2"] = "Busy";
+                datas.save();
+            }
+            else
+                if (slot === "slot3") {
+                    Slot = "Slot 3";
+                    datas.schedule[index]["slot3"] = "Busy";
+                    datas.save();
+                }
+    })
+
+    console.log(Slot);
+
+
+
+
+
 
 
     const appointments = new Appointment({
@@ -270,7 +276,7 @@ app.post("/scheduleAppointment", function (req, res) {
             res.render("userAppointments", { doctors: data, userName: citizenName });
         });
 
-        
+
 
     }, 1000);
 
@@ -283,7 +289,7 @@ app.get("/myAppointments", function (req, res) {
     Appointment.find({ userName: citizenName }).then(function (data) {
         res.render("userAppointments", { doctors: data, userName: citizenName });
     });
-})
+});
 
 
 // Approving appointment by doctor
@@ -294,7 +300,7 @@ app.post("/approveAppointment", function (req, res) {
     const date = req.body.date;
     const slot = req.body.slot;
 
-    Appointment.updateOne({ doctorName: doctorName, userName: userName, status: "Pending", date:date, slot:slot }, {status: "Approved" }).then(function (data) {
+    Appointment.updateOne({ doctorName: doctorName, userName: userName, status: "Pending", date: date, slot: slot }, { status: "Approved" }).then(function (data) {
         console.log(data);
     });
 
@@ -315,9 +321,39 @@ app.post("/completedAppointment", function (req, res) {
     const date = req.body.date;
     const slot = req.body.slot;
 
-    Appointment.updateOne({ doctorName: doctorName, userName: userName, status: "Approved",date:date, slot:slot  }, {status: "Complete" }).then(function (data) {
-        console.log(data);    // updating status approve to complete 
+    Appointment.updateOne({ doctorName: doctorName, userName: userName, status: "Approved", date: date, slot: slot }, { status: "Complete" }).then(function (data) {
+        console.log(data);
+        // updating status approve to complete 
     });
+
+    Doctor.findOne({ name: doctorName }).then(function (datas) {
+        console.log(datas);
+        let c = -1;
+        let index;
+        datas.schedule.forEach(element => {
+            c++;
+            if (element.date === date)
+                index = c;
+
+        });
+        if (slot === "Slot 1") {
+
+            datas.schedule[index]["slot1"] = "Free";
+            datas.save();
+        }
+        else
+            if (slot === "Slot 2") {
+
+                datas.schedule[index]["slot2"] = "Free";
+                datas.save();
+            }
+            else
+                if (slot === "Slot 3") {
+
+                    datas.schedule[index]["slot3"] = "Free";
+                    datas.save();
+                }
+    })
 
     setTimeout(() => {
 
