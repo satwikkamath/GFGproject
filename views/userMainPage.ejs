@@ -10,11 +10,31 @@
     integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 
   <link rel="stylesheet" href="userMainPages.css">
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS, Font-Awesome, Bootstrap Files -->
+  <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
   <title>User Main Page</title>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg sticky-top" style="background-color:  #f2f2f2;">
+  <!-- <nav class="navbar navbar-expand-lg sticky-top" style="background-color:  #f2f2f2;">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="" alt="">
@@ -41,500 +61,102 @@
         </ul>
       </div>
     </div>
-  </nav>
-  <div class="content">
-    <div class="text">
-      <h1>Hi <%= userName %>
-      </h1>
+  </nav> -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a>Care Point</a></h1>
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="/userHome">Home</a></li>
+          <li><a class="nav-link scrollto" href="/doctorOnDemand">Doctor-On-Demand</a></li>
+          <li><a class="nav-link scrollto" href="/clinicAppointment">Schedule Appointment</a></li>
+          <li><a class="nav-link scrollto" href="/myAppointments">My Appointments</a></li>
+
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+
+
+
     </div>
-    <div class="image"> <img src="doctor.avif" alt="">
+  </header>
+
+  <section id="hero" class="d-flex align-items-center" style="padding-top: 0px">
+    <div class="container">
+      <h1>Hi <%= userName %> .<br> Welcome to Care Point</h1>
+      <h2>Healing lives, with care and compassion.</h2>
+
     </div>
-
-  </div>
-  <div class="section">
-    <h3>Doctor On Demand</h3>
-    <div class="form">
-      <form action="/homeDoctorSearch" method="post">
-        <div class="formContent">
-          Please fill out the form below to search for physicians and schedule appointments to have them visit
-          your residence.
-        </div>
-        <div class="formContent">
-          Choose your area :
-          <select name="area" id="" class="form-select" aria-label="Default select example">
-            <option value="Kengeri">Kengeri</option>
-            <option value="Hebbala">Hebbala</option>
-            <option value="Krishnarajapuram">Krishnarajapuram</option>
-            <option value="Anekal">Anekal</option>
-            <option value="Yelahanka">Yelahanka</option>
-          </select>
-        </div>
-
-        <div class="formContent">
-          Choose specialization of the doctor :
-          <select name="specialization" id="" class="form-select" aria-label="Default select example">
-            <option value="Neurology">Neurology</option>
-            <option value="Orthopedics">Orthopedics</option>
-            <option value="ENT">ENT</option>
-            <option value="Urology">Urology</option>
-            <option value="Opthalmology">Opthalmology</option>
-            <option value="Pediatrics">Pediatrics</option>
-            <option value="Dermatolgy">Dermatolgy</option>
-            <option value="Psychiatry">Psychiatry</option>
-            <option value="Dentistry">Dentistry</option>
-            <option value="Nephrology">Nephrology</option>
-            <option value="General Surgery">General Surgery</option>
-            <option value="General Physician">General Physician</option>
-            <option value="Ayurveda">Ayurveda</option>
-            <option value="Nutritionist">Nutritionist</option>
-            <option value="Psychology">Psychology</option>
-            <option value="Cardiology">Cardiology</option>
-            <option value="Gynaecology">Gynaecology</option>
-          </select>
-        </div>
-
-        <div class="button">
-          <button type="submit" class="btn btn-success">Search Doctors</button>
-        </div>
-      </form>
-      <% if(homeDoctorData){ %>
-
-        <div class="formContent">
-          <div class="row">
-            <% homeDoctorData.forEach(element=> {%>
-
-              <% let g=element.gender.charAt(0).toUpperCase() + element.gender.slice(1);%>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                  <div class="card">
-                    <div class="card-body">
-
-                      <div class="container">
-
-                        <form action="/scheduleHomeAppointment" method="post">
-                          <div class="row">
-                            <div class="col-4">
-                              Name
-                            </div>
-                            <div class="col-8">
-                              : Dr.<%= element.name%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Age
-                            </div>
-                            <div class="col-8">
-                              : <%= element.age%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Gender
-                            </div>
-                            <div class="col-8">
-                              : <%= g%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Experience
-                            </div>
-                            <div class="col-8">
-                              : <%= element.experience%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Area
-                            </div>
-                            <div class="col-8">
-                              : <%= element.area%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Specialization
-                            </div>
-                            <div class="col-8">
-                              : <%= element.specialization%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Address
-                            </div>
-                            <div class="col-8">
-                              : <%= element.address%>
-                            </div>
-
-                          </div>
-                      </div>
+  </section>
 
 
+  <main id="main">
 
-                      <% if(element.schedule[0]){ %>
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">Date</th>
-                              <th scope="col">Slot 1</th>
-                              <th scope="col">Slot 2</th>
-                              <th scope="col">slot 3</th>
-                            </tr>
-                          </thead>
-                          <tbody>
+    <!-- ======= Why Us Section ======= -->
+    <section id="why-us" class="why-us">
+      <div class="container">
 
+        <div class="row">
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="content">
+              <h3>Why Choose Care Point?</h3>
+              <p>
+                We at Care Point Offer High-quality medical care, State-of-the-art facilities, Comprehensive range of
+                services, Patient-centered approach, Convenient locations.
+              </p>
+              <div class="text-center">
 
-                            <% element.schedule.forEach(ele=> { %>
-
-                              <tr>
-                                <th scope="row">
-                                  <% if(ele.date) %>
-                                    <%= ele.date %>
-                                </th>
-                                <% let Slot1=ele.date + "slot1" + ele._id %>
-                                  <% let Slot2=ele.date + "slot2" + ele._id %>
-                                    <% let Slot3=ele.date + "slot3" + ele._id %>
-                                      <% if(ele.slot1==="Free" ){ %>
-                                        <td>
-
-
-
-                                          <div class="form-check">
-                                            <input class="form-check-input" name="slot" type="checkbox" value=<%=Slot1
-                                              %> id="flexCheckDefault">
-
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                              <%= ele.slot1 %>
-                                            </label>
-                                          </div>
-
-                                        </td>
-                                        <% }else if(ele.slot1==="Busy" ){ %>
-
-                                          <td>
-                                            <%= ele.slot1 %>
-                                          </td>
-                                          <% } %>
-
-
-                                            <% if(ele.slot2==="Free" ){ %>
-                                              <td>
-                                                <div class="form-check">
-                                                  <input class="form-check-input" name="slot" type="checkbox"
-                                                    value=<%=Slot2 %> id="flexCheckDefault">
-
-                                                  <label class="form-check-label" for="flexCheckDefault">
-                                                    <%= ele.slot2 %>
-                                                  </label>
-                                                </div>
-                                              </td>
-                                              <% }else if(ele.slot2==="Busy" ){ %>
-
-                                                <td>
-                                                  <%= ele.slot2 %>
-                                                </td>
-                                                <% } %>
-
-                                                  <% if(ele.slot3==="Free" ){ %>
-                                                    <td>
-                                                      <div class="form-check">
-                                                        <input class="form-check-input" name="slot" type="checkbox"
-                                                          value=<%=Slot3 %> id="flexCheckDefault">
-
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                          <%= ele.slot3 %>
-                                                        </label>
-                                                      </div>
-                                                    </td>
-                                                    <% }else if(ele.slot3==="Busy" ){ %>
-
-                                                      <td>
-                                                        <%= ele.slot3 %>
-                                                      </td>
-                                                      <% } %>
-
-                              </tr>
-                              <% }); %>
-                          </tbody>
-                        </table>
-                        <input type="hidden" id="custId" name="doctorName" value="<%= element.name %>">
-
-                        <button type="submit" class="btn btn-success">Schedule Appointment</a>
-                          </form>
-                          <% }else{ %>
-                            <div class="alert alert-danger" role="alert">The doctor has not updated his/her schedule
-                            </div>
-                            <% } %>
-
-
-
-
-
-
-
-
-
-                    </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 d-flex align-items-stretch">
+            <div class="icon-boxes d-flex flex-column justify-content-center">
+              <div class="row">
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box mt-4 mt-xl-0 boxshadow">
+                    <i class="fas fa-hospital-alt"></i>
+                    <h4>Newest Technologies</h4>
+                    <p>Care Point Hospital invests in innovative technologies, such as telemedicine and Artificial
+                      Intelligence, to improve patient care and outcomes.</p>
                   </div>
                 </div>
-                <% }) %>
-
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box mt-4 mt-xl-0">
+                    <i class="fas fa-user-md"></i>
+                    <h4>Experienced Doctors</h4>
+                    <p>Care Point Hospital has a team of experienced doctors who provide personalized, compassionate
+                      care to patients across all specialties.</p>
+                  </div>
+                </div>
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box mt-4 mt-xl-0">
+                    <i class="fas fa-briefcase-medical"></i>
+                    <h4>High Customer Satisfaction</h4>
+                    <p>Care Point Hospital achieves high customer satisfaction by providing quality healthcare services
+                      and putting patients first.</p>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End .content-->
           </div>
         </div>
 
-        <% } %>
+      </div>
+    </section>
 
-    </div>
-  </div>
-  <div class="section">
-    <h3>Schedule Clinic Appointment</h3>
-    <div class="form">
-      <form action="/clinicDoctorSearch" method="post">
-        <div class="formContent">
-          Please fill out the form below to search for physicians and schedule appointments at their Clinics
-        </div>
-        <div class="formContent">
-          Choose your area :
-          <select name="area" id="" class="form-select" aria-label="Default select example">
-            <option value="Kengeri">Kengeri</option>
-            <option value="Hebbala">Hebbala</option>
-            <option value="Krishnarajapuram">Krishnarajapuram</option>
-            <option value="Anekal">Anekal</option>
-            <option value="Yelahanka">Yelahanka</option>
-          </select>
-        </div>
+  </main>
 
-        <div class="formContent">
-          Choose specialization of the doctor :
-          <select name="specialization" id="" class="form-select" aria-label="Default select example">
-            <option value="Neurology">Neurology</option>
-            <option value="Orthopedics">Orthopedics</option>
-            <option value="ENT">ENT</option>
-            <option value="Urology">Urology</option>
-            <option value="Opthalmology">Opthalmology</option>
-            <option value="Pediatrics">Pediatrics</option>
-            <option value="Dermatolgy">Dermatolgy</option>
-            <option value="Psychiatry">Psychiatry</option>
-            <option value="Dentistry">Dentistry</option>
-            <option value="Nephrology">Nephrology</option>
-            <option value="General Surgery">General Surgery</option>
-            <option value="General Physician">General Physician</option>
-            <option value="Ayurveda">Ayurveda</option>
-            <option value="Nutritionist">Nutritionist</option>
-            <option value="Psychology">Psychology</option>
-            <option value="Cardiology">Cardiology</option>
-            <option value="Gynaecology">Gynaecology</option>
-          </select>
-        </div>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
 
-        <div class="button">
-          <button type="submit" class="btn btn-success">Search Doctors</button>
-        </div>
-      </form>
-      <% if(clinicDoctorData){ %>
-
-        <div class="formContent">
-          <div class="row">
-            <% clinicDoctorData.forEach(element=> {%>
-
-              <% let g=element.gender.charAt(0).toUpperCase() + element.gender.slice(1);%>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                  <div class="card">
-                    <div class="card-body">
-
-                      <div class="container">
-
-                        <form action="/scheduleClinicAppointment" method="post">
-                          <div class="row">
-                            <div class="col-4">
-                              Name
-                            </div>
-                            <div class="col-8">
-                              : Dr.<%= element.name%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Age
-                            </div>
-                            <div class="col-8">
-                              : <%= element.age%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Gender
-                            </div>
-                            <div class="col-8">
-                              : <%= g%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Experience
-                            </div>
-                            <div class="col-8">
-                              : <%= element.experience%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Area
-                            </div>
-                            <div class="col-8">
-                              : <%= element.area%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Specialization
-                            </div>
-                            <div class="col-8">
-                              : <%= element.specialization%>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              Address
-                            </div>
-                            <div class="col-8">
-                              : <%= element.address%>
-                            </div>
-
-                          </div>
-                      </div>
-
-
-
-                      <% if(element.schedule[0]){ %>
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">Date</th>
-                              <th scope="col">Slot 1</th>
-                              <th scope="col">Slot 2</th>
-                              <th scope="col">Slot 3</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-
-
-                            <% element.schedule.forEach(ele=> { %>
-
-                              <tr>
-                                <th scope="row">
-                                  <% if(ele.date) %>
-                                    <%= ele.date %>
-                                </th>
-                                <% let Slot1=ele.date + "slot1" + ele._id %>
-                                  <% let Slot2=ele.date + "slot2" + ele._id %>
-                                    <% let Slot3=ele.date + "slot3" + ele._id %>
-                                      <% if(ele.slot1==="Free" ){ %>
-                                        <td>
-
-
-
-                                          <div class="form-check">
-                                            <input class="form-check-input" name="slot" type="checkbox" value=<%=Slot1
-                                              %> id="flexCheckDefault">
-
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                              <%= ele.slot1 %>
-                                            </label>
-                                          </div>
-
-                                        </td>
-                                        <% }else if(ele.slot1==="Busy" ){ %>
-
-                                          <td>
-                                            <%= ele.slot1 %>
-                                          </td>
-                                          <% } %>
-
-
-                                            <% if(ele.slot2==="Free" ){ %>
-                                              <td>
-                                                <div class="form-check">
-                                                  <input class="form-check-input" name="slot" type="checkbox"
-                                                    value=<%=Slot2 %> id="flexCheckDefault">
-
-                                                  <label class="form-check-label" for="flexCheckDefault">
-                                                    <%= ele.slot2 %>
-                                                  </label>
-                                                </div>
-                                              </td>
-                                              <% }else if(ele.slot2==="Busy" ){ %>
-
-                                                <td>
-                                                  <%= ele.slot2 %>
-                                                </td>
-                                                <% } %>
-
-                                                  <% if(ele.slot3==="Free" ){ %>
-                                                    <td>
-                                                      <div class="form-check">
-                                                        <input class="form-check-input" name="slot" type="checkbox"
-                                                          value=<%=Slot3 %> id="flexCheckDefault">
-
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                          <%= ele.slot3 %>
-                                                        </label>
-                                                      </div>
-                                                    </td>
-                                                    <% }else if(ele.slot3==="Busy" ){ %>
-
-                                                      <td>
-                                                        <%= ele.slot3 %>
-                                                      </td>
-                                                      <% } %>
-
-                              </tr>
-                              <% }); %>
-                          </tbody>
-                        </table>
-                        <input type="hidden" id="custId" name="doctorName" value="<%= element.name %>">
-
-                        <button type="submit" class="btn btn-success">Schedule Appointment</a>
-                          </form>
-                          <% }else{ %>
-                            <div class="alert alert-danger" role="alert">The doctor has not updated his/her schedule
-                            </div>
-                            <% } %>
-
-
-
-
-
-
-
-
-
-                    </div>
-                  </div>
-                </div>
-                <% }) %>
-
-          </div>
-        </div>
-
-        <% } %>
-
-    </div>
-  </div>
-
+  <!-- JS File -->
+  <script src="assets/js/main.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"

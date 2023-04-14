@@ -1,13 +1,13 @@
-.navbar {
+/* .navbar {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
     /* background-color: #f2f2f2; */
-}
+ */
 
 .body{
     background-color: #f2f2f2;
 }
 
-.content {
+/* .content {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,7 +15,7 @@
     height: 50vh;
     margin-left: 2%;
     margin-right: 2%;
-}
+} */
 
 .text {
     width: 60%;
@@ -42,11 +42,11 @@
 }
 
 .section {
-
+    z-index: 2;
     height: auto;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-    margin: 2%;
-    padding: 2%;
+
+    padding: 4%;
 }
 
 .formContent{
@@ -75,4 +75,9 @@
 .navbar-brand img{
     height: 40px;
     border-radius: 50%;
+}
+
+
+.boxshadow{
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
 }

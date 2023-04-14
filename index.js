@@ -177,6 +177,18 @@ app.post("/docLogin", function (req, res) {
     })
 })
 
+
+app.get("/userHome",function(req,res){
+    res.render("userMainPage", {userName:citizenName});
+})
+app.get("/doctorOnDemand",function(req,res){
+    res.render("doctorOnDemand",{homeDoctorData: false, docSchedule:false, userName:citizenName});
+})
+
+
+app.get("/clinicAppointment",function(req,res){
+    res.render("clinicAppointment",{clinicDoctorData: false, docSchedule:false, userName:citizenName});
+})
 //Home doctor search
 
 app.post("/homeDoctorSearch", function (req, res) {
@@ -217,7 +229,7 @@ app.post("/homeDoctorSearch", function (req, res) {
             
         });
         setTimeout(() => {
-            res.render("userMainPage", { doctorName: false,clinicDoctorData:false, homeDoctorData: doctors, userName: citizenName });
+            res.render("doctorOnDemand", { homeDoctorData: doctors, userName: citizenName });
         }, 1000);
     });
 });
@@ -261,7 +273,7 @@ app.post("/clinicDoctorSearch", function (req, res) {
             element.save();
         });
         setTimeout(() => {
-            res.render("userMainPage", { doctorName: false,homeDoctorData:false, clinicDoctorData: doctors, userName: citizenName });
+            res.render("clinicAppointment", {clinicDoctorData: doctors, userName: citizenName });
         }, 1000);
     });
 });
