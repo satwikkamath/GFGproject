@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
     phoneNumber: Number,
     age: Number,
     gender: String,
-    address: String
+
 })
 
 //Appointment Template Creation
@@ -56,7 +56,8 @@ const appointmentSchema = new mongoose.Schema({
     status: String,
     date: String,
     slot: String,
-    type: String
+    type: String,
+    address: String
 })
 
 const Doctor = mongoose.model("doctor", docSchema);
@@ -103,7 +104,7 @@ app.post("/userSignUp", function (req, res) {
     const receivedEmail = req.body.email;
     const receivedGender = req.body.gender;
     const receivedPhno = req.body.phno;
-    const receivedAddress = req.body.address;
+
     const receivedPswd = req.body.password;
     const cpswd = req.body.cpassword;
     if (receivedPswd != cpswd) {
@@ -122,7 +123,7 @@ app.post("/userSignUp", function (req, res) {
                     phoneNumber: receivedPhno,
                     age: receivedAge,
                     gender: receivedGender,
-                    address: receivedAddress
+ 
                 })
                 user.save();
                 res.render("userLogin", { text: "Your account was succesfully created", passwordFail: false, notFound: false });
@@ -199,10 +200,12 @@ app.get("/clinicAppointment",function(req,res){
     res.render("clinicAppointment",{clinicDoctorData: false, docSchedule:false, userName:citizenName});
 })
 //Home doctor search
-
+let homeAppointMentAddress;
+let clinicAppointMentAddress;
 app.post("/homeDoctorSearch", function (req, res) {
     const receivedArea = req.body.area;
     const receivedSpecialization = req.body.specialization;
+    homeAppointMentAddress = req.body.address;
 
     let today = new Date();
     let year = today.getFullYear();
@@ -248,6 +251,7 @@ app.post("/homeDoctorSearch", function (req, res) {
 app.post("/clinicDoctorSearch", function (req, res) {
     const receivedArea = req.body.area;
     const receivedSpecialization = req.body.specialization;
+    clinicAppointMentAddress = req.body.address;
 
     let today = new Date();
     let year = today.getFullYear();
@@ -292,6 +296,7 @@ app.post("/clinicDoctorSearch", function (req, res) {
 app.post("/scheduleHomeAppointment", function (req, res) {
     const receivedSlot = req.body.slot;
     const receivedDocName = req.body.doctorName;
+
 
     const date = receivedSlot.slice(0, 10);
     const slot = receivedSlot.slice(10, 15);
@@ -343,7 +348,8 @@ app.post("/scheduleHomeAppointment", function (req, res) {
         status: "Pending",
         date: date,
         slot: Slot,
-        type: "Home"
+        type: "Home",
+        address: homeAppointMentAddress
     });
 
     appointments.save();
@@ -360,6 +366,7 @@ app.post("/scheduleHomeAppointment", function (req, res) {
 app.post("/scheduleClinicAppointment", function (req, res) {
     const receivedSlot = req.body.slot;
     const receivedDocName = req.body.doctorName;
+
 
     const date = receivedSlot.slice(0, 10);
     const slot = receivedSlot.slice(10, 15);
@@ -412,6 +419,7 @@ app.post("/scheduleClinicAppointment", function (req, res) {
         date: date,
         slot: Slot,
         type:"Clinic",
+        address:clinicAppointMentAddress
     });
 
     appointments.save();

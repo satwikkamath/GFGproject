@@ -85,9 +85,13 @@
                                     <option value="Gynaecology">Gynaecology</option>
                                   </select>
                                 </div>
+                                <div class="form-floating">
+                                  <textarea name="address" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
+                                  <label for="floatingTextarea2">Enter Your Address</label>
+                                </div>
+                                <br>
                       
-                      
-                                <button type="submit" class="btn btn-primary">Search Doctors</button>
+                                <button type="submit" class="allButtons">Search Doctors</button>
                       
                               </form>
                               <% if(homeDoctorData){ %>
@@ -106,7 +110,7 @@
                                                 <form action="/scheduleHomeAppointment" method="post">
                                                   <div class="row">
                                                     <div class="col-4">
-                                                      Name
+                                                     <strong>Name</strong>
                                                     </div>
                                                     <div class="col-8">
                                                       : Dr.<%= element.name%>
@@ -115,7 +119,7 @@
                                                   </div>
                                                   <div class="row">
                                                     <div class="col-4">
-                                                      Age
+                                                      <strong>Age</strong>
                                                     </div>
                                                     <div class="col-8">
                                                       : <%= element.age%>
@@ -124,7 +128,7 @@
                                                   </div>
                                                   <div class="row">
                                                     <div class="col-4">
-                                                      Gender
+                                                      <strong>Gender</strong>
                                                     </div>
                                                     <div class="col-8">
                                                       : <%= g%>
@@ -133,7 +137,7 @@
                                                   </div>
                                                   <div class="row">
                                                     <div class="col-4">
-                                                      Experience
+                                                      <strong>Experience</strong>
                                                     </div>
                                                     <div class="col-8">
                                                       : <%= element.experience%>
@@ -142,7 +146,7 @@
                                                   </div>
                                                   <div class="row">
                                                     <div class="col-4">
-                                                      Area
+                                                      <strong>Area</strong>
                                                     </div>
                                                     <div class="col-8">
                                                       : <%= element.area%>
@@ -151,7 +155,7 @@
                                                   </div>
                                                   <div class="row">
                                                     <div class="col-4">
-                                                      Specialization
+                                                      <strong>Specialization</strong>
                                                     </div>
                                                     <div class="col-8">
                                                       : <%= element.specialization%>
@@ -160,13 +164,16 @@
                                                   </div>
                                                   <div class="row">
                                                     <div class="col-4">
-                                                      Address
+                                                      <strong>Address</strong>
                                                     </div>
                                                     <div class="col-8">
                                                       : <%= element.address%>
                                                     </div>
                       
                                                   </div>
+                                              </div>
+                                              <div class="formContent">
+                                               <strong>Choose a preferred slot </strong> 
                                               </div>
                       
                       
@@ -259,7 +266,7 @@
                                                 </table>
                                                 <input type="hidden" id="custId" name="doctorName" value="<%= element.name %>">
                       
-                                                <button type="submit" class="btn btn-primary">Schedule Appointment</a>
+                                                <button type="submit" class="allButtons">Schedule Appointment</a>
                                                   </form>
                                                   <% }else{ %>
                                                     <div class="alert alert-danger" role="alert">The doctor has not updated his/her schedule

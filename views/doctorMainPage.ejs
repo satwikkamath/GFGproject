@@ -51,26 +51,52 @@
                                 Your Schedule Was Updated Succesfully !
                               </div>
                             <% } %>
-                            <h1>Update Schedule</h1>
+                            <h1>Update Schedule</h1> <br>
                             <form action="/updateSchedule" method="post">
                                 <input type="date" name="date" id=""> <br> <br>
-                                Slot 1 :
-                                <select name="slot1" id="">
-                                    <option value="Free">Free</option>
-                                    <option value="Busy">Busy</option>
-                                </select> <br> <br>
-                                Slot 2 :
-                                <select name="slot2" id="">
-                                    <option value="Free">Free</option>
-                                    <option value="Busy">Busy</option>
-                                </select> <br> <br>
-                                Slot 3 :
-                                <select name="slot3" id="">
-                                    <option value="Free">Free</option>
-                                    <option value="Busy">Busy</option>
-                                </select> <br> <br>
+
+                                <div class="row">
+                                    <div class="col-1">
+                                        <strong>Slot 1 : </strong>
+                                    </div>
+                                    <div class="col-4">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="slot1" id="">
+                                            <option value="Free">Free</option>
+                                            <option value="Busy">Busy</option>
+                                        </select>
+                                    </div>
+
+                                </div> <br>
+                                <div class="row">
+                                    <div class="col-1">
+                                        <strong>Slot 2 : </strong>
+                                    </div>
+                                    <div class="col-4">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="slot2" id="">
+                                            <option value="Free">Free</option>
+                                            <option value="Busy">Busy</option>
+                                        </select>
+                                    </div>
+
+                                </div> <br>
+                                <div class="row">
+                                    <div class="col-1">
+                                        <strong>Slot 3 : </strong>
+                                    </div>
+                                    <div class="col-4">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="slot3" id="">
+                                            <option value="Free">Free</option>
+                                            <option value="Busy">Busy</option>
+                                        </select>
+                                    </div>
+
+                                </div> <br>
+
+                             
+                                 
+                    
                                 <input type="text" name="doctorName" value="<%= doctorName %>" id="" hidden>
-                                <button class="btn btn-primary" type="submit">Update Schedule </button>
+                                <button class="allButtons" type="submit">Update Schedule </button>
                             </form>
                         </div>
                     </div>

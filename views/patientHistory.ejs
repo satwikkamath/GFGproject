@@ -49,14 +49,63 @@
                             <div class="formContent">
                                 <div class="row">
                                     <% doctors.forEach(element=> { %>
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
                                             <div class="card">
                                                 <div class="card-body">
                     
                                                     <div class="container">
-                                                        <%= element.userName%> <br>
-                                                            <%= element.address%> <br>
-                                                                <%= element.status%>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Patient Name</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.userName%>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Date</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.date%>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Slot</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.slot%>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Address</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.address%>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Appointment Type</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.type%>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Status</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.status%>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

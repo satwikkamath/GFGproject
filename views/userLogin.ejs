@@ -27,14 +27,14 @@
               <% } %>
                 
 
-                  <button type="submit" class="btn btn-primary">Login</button>
+                  <button type="submit" class="allButtons">Login</button>
           </form>
           <% if(notFound){ %>
 
           <div class="alert alert-danger" role="alert">No account found with this email. <br>  Go to Sign Up Page and register first <br>
           </div>
           <form action="/citizenSignup" method="get">
-            <button type="submit" class="btn btn-primary">Go To Sign Up Page</button>
+            <button type="submit" class="allButtons">Go To Sign Up Page</button>
           </form>   
           
           <% } %>

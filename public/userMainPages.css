@@ -85,3 +85,49 @@
 .boxshadow{
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
 }
+
+
+
+
+/*input type date*/
+
+
+input[type="date"]{
+    background-color: #1977cc;
+    padding: 5px;
+
+
+
+    font-family: "Roboto Mono",monospace;
+    color: #ffffff;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+::-webkit-calendar-picker-indicator{
+    background-color: #ffffff;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+
+.allButtons{
+    background: #1977cc;
+    color: white;
+    transition: 0.5s;
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    border: 2px solid #1977cc;
+    font-size: 17px;
+    font-family: "Raleway", sans-serif;
+}
+
+.allButtons:hover{
+    background: #166dba;
+}
+
+.copyright{
+    text-align: center;
+}

@@ -37,42 +37,61 @@
         <!-- ======= Why Us Section ======= -->
         <section id="why-us" class="why-us">
             <div class="container">
-
-
-
-
                 <div class="icon-boxes d-flex flex-column boxshadow ">
-
-
                     <div class="icon-box mt-4 mt-xl-0">
-
-
-                        <h3>My Appointments</h3>
-
+                     <h3>My Appointments</h3>
                         <%if(doctors[0]){ %>
                             <div class="formContent">
                                 <div class="row">
                                     <% doctors.forEach(element=> { %>
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
                                             <div class="card">
                                                 <div class="card-body">
-
                                                     <div class="container">
-                                                        <p>
-                                                            <%= element.doctorName %>
-                                                        </p>
-                                                        <p>
-                                                            <%= element.status %>
-                                                        </p>
-                                                        <p>
-                                                            <%= element.date %>
-                                                        </p>
-                                                        <p>
-                                                            <%= element.slot %>
-                                                        </p>
-                                                        <p>
-                                                            <%= element.type %>
-                                                        </p>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Doctor Name</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : Dr. <%= element.doctorName %>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Date</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.date %>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Slot</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.slot%>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Appointment Type</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.type %>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Appointment Status</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.status %>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>

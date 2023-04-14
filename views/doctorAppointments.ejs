@@ -1,149 +1,203 @@
 <%- include("partials/header.ejs") %>
 
-</head>
-
-<body>
-    <header id="header" class="fixed-top">
-        <div class="container d-flex align-items-center">
-
-            <h1 class="logo me-auto"><a><img class = "Logo" src="logo.png" alt=""> Care Point</a></h1>
-
-            <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
-                    <li><a class="nav-link scrollto" href="/userHome">Home</a></li>
-                    <li><a class="nav-link scrollto active" href="/doctorAppointments">My Appointments</a></li>
-
-
-
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
-
-
-
-        </div>
-    </header>
-    <section id="hero" class="d-flex align-items-center" style="padding-top: 0px">
-        <div class="container">
-            <h1>Hi Dr. <%= doctorName %> .<br> Welcome to Care Point</h1>
-            <h2>Healing lives, with care and compassion.</h2>
-
-        </div>
-    </section>
-
+    </head>
 
     <body>
-        <main id="main">
+        <header id="header" class="fixed-top">
+            <div class="container d-flex align-items-center">
 
-            <!-- ======= Why Us Section ======= -->
-            <section id="why-us" class="why-us">
-                <div class="container">
+                <h1 class="logo me-auto"><a><img class="Logo" src="logo.png" alt=""> Care Point</a></h1>
+
+                <nav id="navbar" class="navbar order-last order-lg-0">
+                    <ul>
+                        <li><a class="nav-link scrollto" href="/doctorHome">Home</a></li>
+                        <li><a class="nav-link scrollto active" href="/doctorAppointments">My Appointments</a></li>
+
+
+
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav>
+
+
+
+            </div>
+        </header>
+        <section id="hero" class="d-flex align-items-center" style="padding-top: 0px">
+            <div class="container">
+                <h1>Hi Dr. <%= doctorName %> .<br> Welcome to Care Point</h1>
+                <h2>Healing lives, with care and compassion.</h2>
+
+            </div>
+        </section>
+
+
+        <body>
+            <main id="main">
+
+
+                <section id="why-us" class="why-us">
+                    <div class="container">
 
 
 
 
-                    <div class="icon-boxes d-flex flex-column boxshadow ">
+                        <div class="icon-boxes d-flex flex-column boxshadow ">
 
 
-                        <div class="icon-box mt-4 mt-xl-0">
-                            <h1>My appointments</h1>
-                
-                            <% if(patients[0]){ %>
-                                <div class="formContent">
-                                    <div class="row">
-                                        <% patients.forEach(element=> { %>
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                
-                
-                                                        <div class="container">
-                                                            <%= element.userName%> <br>
-                                                                <%= element.date%> <br>
-                                                                    <%= element.slot%> <br>
-                                                                        <%= element.address%> <br>
-                                                                            <%= element.type%> <br>
-                                                                                <% if(element.status==="Pending" ){ %>
-                                                                                    <p> Status: <%= element.status%>
-                                                                                    </p> <br>
-                                                                                    <form action="/approveAppointment"
-                                                                                        method="post">
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-primary">Approve</button> <br><br>
-                                                                                        <input type="text" name="doctorName"
-                                                                                            value="<%= element.doctorName%>" hidden
-                                                                                            id="">
-                                                                                        <input type="text" name="userName"
-                                                                                            value="<%= element.userName%>" hidden
-                                                                                            id="">
-                                                                                        <input type="text" name="date"
-                                                                                            value="<%= element.date%>" hidden id="">
-                                                                                        <input type="text" name="slot"
-                                                                                            value="<%= element.slot%>" hidden id="">
-                                                                                    </form>
-                                                                                    <% }else if(element.status==="Approved" ){ %>
-                                                                                        <p> Status: <%= element.status%>
-                                                                                        </p>
-                                                                                        <form action="/completedAppointment"
-                                                                                            method="post">
-                                                                                            <button type="submit"
-                                                                                                class="btn btn-primary">Complete</button>
-                                                                                            <br><br>
-                                                                                            <input type="text" name="doctorName"
-                                                                                                value="<%= element.doctorName%>"
-                                                                                                hidden id="">
-                                                                                            <input type="text" name="userName"
-                                                                                                value="<%= element.userName%>"
-                                                                                                hidden id="">
-                                                                                            <input type="text" name="date"
-                                                                                                value="<%= element.date%>" hidden
-                                                                                                id="">
-                                                                                            <input type="text" name="slot"
-                                                                                                value="<%= element.slot%>" hidden
-                                                                                                id="">
-                                                                                        </form>
-                                                                                        <% }else{ %>
-                                                                                            <p> Status: <%= element.status%>
-                                                                                            </p>
-                                                                                            <% } %>
-                
-                                                                                                <form action="/userHistory"
-                                                                                                    method="post">
-                                                                                                    <button type="submit"
-                                                                                                        class="btn btn-primary">Get
-                                                                                                        Patient
-                                                                                                        History</button>
-                                                                                                    <input type="text"
-                                                                                                        name="doctorName"
-                                                                                                        value="<%= element.doctorName%>"
-                                                                                                        hidden id="">
-                                                                                                    <input type="text"
-                                                                                                        name="userName"
-                                                                                                        value="<%= element.userName%>"
-                                                                                                        hidden id="">
-                                                                                                </form>
+                            <div class="icon-box mt-4 mt-xl-0">
+                                <h1>My appointments</h1>
+
+                                <% if(patients[0]){ %>
+                                    <div class="formContent">
+                                        <div class="row">
+                                            <% patients.forEach(element=> { %>
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+
+
+                                                            <div class="container">
+
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <strong>Patient Name</strong>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        : <%= element.userName%>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <strong>Date</strong>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        : <%= element.date%>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <strong>Slot</strong>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        : <%= element.slot%>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <strong>Address</strong>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        : <%= element.address%>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <strong>Appointment Type</strong>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        : <%= element.type%>
+                                                                    </div>
+                                                                </div>
+
+                                                                <% if(element.status==="Pending" ){ %>
+                                                                    <div class="row">
+                                                                        <div class="col-4">
+                                                                            <strong>Status</strong>
+                                                                        </div>
+                                                                        <div class="col-8">
+                                                                            : <%= element.status%>
+                                                                        </div>
+                                                                    </div>
+                                                                    <form action="/approveAppointment" method="post">
+                                                                        <button type="submit"
+                                                                            class="allButtons">Approve</button>
+                                                                        <br><br>
+                                                                        <input type="text" name="doctorName"
+                                                                            value="<%= element.doctorName%>" hidden
+                                                                            id="">
+                                                                        <input type="text" name="userName"
+                                                                            value="<%= element.userName%>" hidden id="">
+                                                                        <input type="text" name="date"
+                                                                            value="<%= element.date%>" hidden id="">
+                                                                        <input type="text" name="slot"
+                                                                            value="<%= element.slot%>" hidden id="">
+                                                                    </form>
+                                                                    <% }else if(element.status==="Approved" ){ %>
+                                                                        <div class="row">
+                                                                            <div class="col-4">
+                                                                                <strong>Status</strong>
+                                                                            </div>
+                                                                            <div class="col-8">
+                                                                                : <%= element.status%>
+                                                                            </div>
+                                                                        </div>
+                                                                        <form action="/completedAppointment"
+                                                                            method="post">
+                                                                            <button type="submit"
+                                                                                class="allButtons">Complete</button>
+                                                                            <br><br>
+                                                                            <input type="text" name="doctorName"
+                                                                                value="<%= element.doctorName%>" hidden
+                                                                                id="">
+                                                                            <input type="text" name="userName"
+                                                                                value="<%= element.userName%>" hidden
+                                                                                id="">
+                                                                            <input type="text" name="date"
+                                                                                value="<%= element.date%>" hidden id="">
+                                                                            <input type="text" name="slot"
+                                                                                value="<%= element.slot%>" hidden id="">
+                                                                        </form>
+                                                                        <% }else{ %>
+                                                                            <div class="row">
+                                                                                <div class="col-4">
+                                                                                    <strong>Status</strong>
+                                                                                </div>
+                                                                                <div class="col-8">
+                                                                                    : <%= element.status%>
+                                                                                </div>
+                                                                            </div>
+                                                                            <% } %>
+
+                                                                                <form action="/userHistory"
+                                                                                    method="post">
+                                                                                   <br> <button type="submit"
+                                                                                        class="allButtons">Get
+                                                                                        Patient
+                                                                                        History</button>
+                                                                                    <input type="text" name="doctorName"
+                                                                                        value="<%= element.doctorName%>"
+                                                                                        hidden id="">
+                                                                                    <input type="text" name="userName"
+                                                                                        value="<%= element.userName%>"
+                                                                                        hidden id="">
+                                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <% }); %>
+                                                <% }); %>
+                                        </div>
                                     </div>
-                                </div>
-                                <% } else{ %>
-                
-                                    <div class="alert alert-danger" role="alert">Currently, you have no
-                                        appointments.</div>
-                                    <% } %>
+                                    <% } else{ %>
+
+                                        <div class="alert alert-danger" role="alert">Currently, you have no
+                                            appointments.</div>
+                                        <% } %>
 
 
 
-                            
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            
-         
-        </main>
-        <%- include("partials/footer.ejs") %>
+
+
+            </main>
+            <%- include("partials/footer.ejs") %>
