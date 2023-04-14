@@ -1,4 +1,3 @@
-
 //Module requirements
 
 const express = require('express');
@@ -11,8 +10,7 @@ require('dotenv').config();
 
 mongoose.connect(process.env.MONGODB_DATABASE_LINK, { useNewUrlParser: true });
 
-
-// Doctor data template creation
+// Schedule template creation
 
 const scheduleSchema = new mongoose.Schema({
     doctorName: String,
@@ -21,6 +19,9 @@ const scheduleSchema = new mongoose.Schema({
     slot2: String,
     slot3: String,
 })
+
+// Doctor data template creation
+
 const docSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -47,6 +48,8 @@ const userSchema = new mongoose.Schema({
     address: String
 })
 
+//Appointment Template Creation
+
 const appointmentSchema = new mongoose.Schema({
     doctorName: String,
     userName: String,
@@ -54,9 +57,7 @@ const appointmentSchema = new mongoose.Schema({
     date: String,
     slot: String,
     type: String
-    // prescription: String
 })
-
 
 const Doctor = mongoose.model("doctor", docSchema);
 const User = mongoose.model("user", userSchema);
@@ -68,30 +69,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set("view engine", "ejs");
 
-
 let citizenName
 
 // Main Page (home route)
-app.get("/", function (req, res) {
 
+app.get("/", function (req, res) {
     res.render("mainPage")
 })
 
 //citizen login through first page
+
 app.get("/citizenLogin", function (req, res) {
     res.render("userLogin", { text: false, passwordFail: false, notFound: false });
 })
 
 // citizen Sign Up through first page
+
 app.get("/citizenSignup", function (req, res) {
     res.render("userSignup", { error: false });
 })
 
 //doctor login through first page
+
 app.get("/doctor", function (req, res) {
     res.render("docLogin", { text: false });
 })
-
 
 //User Sign Up
 
@@ -106,13 +108,11 @@ app.post("/userSignUp", function (req, res) {
     const cpswd = req.body.cpassword;
     if (receivedPswd != cpswd) {
         res.render("userSignup", { error: true });  // if password and confirm password wont match
-
     }
     else {
         User.findOne({ email: receivedEmail }).then(function (data) {
             if (data) {
                 res.render("userLogin", { text: "Account already exists with this Email", passwordFail: false, notFound: false });     // if an account already exists while signing up
-
             }
             else {
                 const user = new User({
@@ -126,13 +126,10 @@ app.post("/userSignUp", function (req, res) {
                 })
                 user.save();
                 res.render("userLogin", { text: "Your account was succesfully created", passwordFail: false, notFound: false });
-
             }
-
         })
     }
 })
-
 
 //User Login
 
@@ -151,7 +148,6 @@ app.post("/userLogin", function (req, res) {
         }
         else {
             res.render("userLogin", { passwordFail: false, text: false, notFound: true });  // if password not matched
-
         }
     })
 })
@@ -164,12 +160,11 @@ app.post("/docLogin", function (req, res) {
     Doctor.findOne({ email: email }).then(function (user) {
         if (user) {
             doctorName = user.name;
+            
             if (pswd === user.password) {
                 // if password matched
                 Appointment.find({ doctorName: doctorName }).then(function (data) {
-
                     res.render("doctorMainPage", { userName: doctorName, patients: data });
-
                 });
             }
             else {
@@ -178,14 +173,12 @@ app.post("/docLogin", function (req, res) {
         }
         else {
             res.render("docLogin", { text: "No account exists with this email" });  // if no account found
-
         }
     })
-
 })
 
-
 //Home doctor search
+
 app.post("/homeDoctorSearch", function (req, res) {
     const receivedArea = req.body.area;
     const receivedSpecialization = req.body.specialization;
@@ -205,10 +198,6 @@ app.post("/homeDoctorSearch", function (req, res) {
     else if(month <10 && date <10 )
     completeDate = year + "-" + month + "-" + date ;
 
-
-
-
-  
     Doctor.find({ area: receivedArea, specialization: receivedSpecialization }).then(function (doctors) {
 
         doctors.forEach(element => {
@@ -229,14 +218,12 @@ app.post("/homeDoctorSearch", function (req, res) {
         });
         setTimeout(() => {
             res.render("userMainPage", { doctorName: false,clinicDoctorData:false, homeDoctorData: doctors, userName: citizenName });
-            
         }, 1000);
     });
-
-
 });
 
 // Clinic Doctor Search
+
 app.post("/clinicDoctorSearch", function (req, res) {
     const receivedArea = req.body.area;
     const receivedSpecialization = req.body.specialization;
@@ -256,10 +243,6 @@ app.post("/clinicDoctorSearch", function (req, res) {
     else if(month <10 && date <10 )
     completeDate = year + "-" + month + "-" + date ;
 
-
-
-
-  
     Doctor.find({ area: receivedArea, specialization: receivedSpecialization }).then(function (doctors) {
 
         doctors.forEach(element => {
@@ -276,19 +259,13 @@ app.post("/clinicDoctorSearch", function (req, res) {
                 
             });
             element.save();
-            
         });
         setTimeout(() => {
             res.render("userMainPage", { doctorName: false,homeDoctorData:false, clinicDoctorData: doctors, userName: citizenName });
-            
         }, 1000);
     });
-
-
 });
-
-
-
+            
 // Scheduling Home Appointment
 
 app.post("/scheduleHomeAppointment", function (req, res) {
@@ -339,14 +316,6 @@ app.post("/scheduleHomeAppointment", function (req, res) {
                 }
     })
 
-
-
-
-
-
-
-
-
     const appointments = new Appointment({
         doctorName: receivedDocName,
         userName: citizenName,
@@ -362,16 +331,10 @@ app.post("/scheduleHomeAppointment", function (req, res) {
         Appointment.find({ userName: citizenName }).then(function (data) {
             res.render("userAppointments", { doctors: data, userName: citizenName });
         });
-
-
-
     }, 1000);
-
 });
 
-
 // Scheduling clinic appointment
-
 
 app.post("/scheduleClinicAppointment", function (req, res) {
     const receivedSlot = req.body.slot;
@@ -421,15 +384,7 @@ app.post("/scheduleClinicAppointment", function (req, res) {
                 }
     })
 
-
-
-
-
-
-
-
-
-    const appointments = new Appointment({
+   const appointments = new Appointment({
         doctorName: receivedDocName,
         userName: citizenName,
         status: "Pending",
@@ -444,23 +399,16 @@ app.post("/scheduleClinicAppointment", function (req, res) {
         Appointment.find({ userName: citizenName }).then(function (data) {
             res.render("userAppointments", { doctors: data, userName: citizenName });
         });
-
-
-
     }, 1000);
-
 });
 
-
 // User Appointments
-
 
 app.get("/myAppointments", function (req, res) {
     Appointment.find({ userName: citizenName }).then(function (data) {
         res.render("userAppointments", { doctors: data, userName: citizenName });
     });
 });
-
 
 // Approving appointment by doctor
 
@@ -504,35 +452,30 @@ app.post("/completedAppointment", function (req, res) {
             c++;
             if (element.date === date)
                 index = c;
-
         });
         if (slot === "Slot 1") {
-
             datas.schedule[index]["slot1"] = "Free";
             datas.save();
         }
         else
             if (slot === "Slot 2") {
-
                 datas.schedule[index]["slot2"] = "Free";
                 datas.save();
             }
             else
                 if (slot === "Slot 3") {
-
                     datas.schedule[index]["slot3"] = "Free";
                     datas.save();
                 }
     })
 
     setTimeout(() => {
-
         Appointment.find({ doctorName: doctorName }).then(function (data) {
-
             res.render("doctorMainPage", { doctorName: doctorName, patients: data });
         });
     }, 1000);  // 1 sec delay because data, which was recently saved was not readable 
 })
+
 
 
 // patient history
@@ -545,9 +488,7 @@ app.post("/userHistory", function (req, res) {
     });
 });
 
-
 // update schedule by doctor
-
 
 app.post("/updateSchedule", function (req, res) {
     const receivedDate = req.body.date;
@@ -570,12 +511,9 @@ app.post("/updateSchedule", function (req, res) {
     Doctor.findOne({ name: doctorName }).then(function (data) {
         data.schedule.push(schedule1);
         data.save();
-
     });
-
-
-    // res.send(schedule1);
 })
+
 
 
 app.listen(3000, function () {
