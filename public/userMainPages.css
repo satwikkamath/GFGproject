@@ -26,6 +26,10 @@
 
 }
 
+.Logo{
+    border-radius: 50%;
+}
+
 .content img {
 
     height: fit-content;
