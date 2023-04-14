@@ -74,7 +74,7 @@ let citizenName
 // Main Page (home route)
 
 app.get("/", function (req, res) {
-    res.render("mainPage")
+    res.render("main")
 })
 
 //citizen login through first page
@@ -140,7 +140,7 @@ app.post("/userLogin", function (req, res) {
         if (user) {
             citizenName = user.name;
             if (pswd === user.password) {
-                res.render("userMainPage", { doctorName: false, homeDoctorData: false,  clinicDoctorData: false, userName: user.name, docSchedule: false });  // if password matched
+                res.render("userMainPage", { doctorName: false,userName: user.name});  // if password matched
             }
             else {
                 res.render("userLogin", { passwordFail: true, text: false, notFound: false });  // if password not matched
@@ -163,9 +163,9 @@ app.post("/docLogin", function (req, res) {
             
             if (pswd === user.password) {
                 // if password matched
-                Appointment.find({ doctorName: doctorName }).then(function (data) {
-                    res.render("doctorMainPage", { userName: doctorName, patients: data });
-                });
+                
+                    res.render("doctorMainPage", { userName: doctorName, text:false});
+                
             }
             else {
                 res.render("docLogin", { text: "Wrong Password" });  // if password not matched
@@ -177,7 +177,16 @@ app.post("/docLogin", function (req, res) {
     })
 })
 
+app.get("/doctorAppointments",function(req,res){
+    Appointment.find({ doctorName: doctorName }).then(function (data) {
+        res.render("doctorAppointments", { userName: doctorName, patients: data });
+    });
 
+})
+
+app.get("/doctorHome",function(req,res){
+    res.render("doctorMainPage", {userName:doctorName, text:false});
+})
 app.get("/userHome",function(req,res){
     res.render("userMainPage", {userName:citizenName});
 })
@@ -438,7 +447,7 @@ app.post("/approveAppointment", function (req, res) {
 
         Appointment.find({ doctorName: doctorName }).then(function (data) {
 
-            res.render("doctorMainPage", { doctorName: doctorName, patients: data });
+            res.render("doctorAppointments", { doctorName: doctorName, patients: data,text:false });
         });
     }, 1000);  // 1 sec delay because data, which was recently saved was not readable 
 })
@@ -483,7 +492,7 @@ app.post("/completedAppointment", function (req, res) {
 
     setTimeout(() => {
         Appointment.find({ doctorName: doctorName }).then(function (data) {
-            res.render("doctorMainPage", { doctorName: doctorName, patients: data });
+            res.render("doctorAppointments", { doctorName: doctorName, patients: data });
         });
     }, 1000);  // 1 sec delay because data, which was recently saved was not readable 
 })
@@ -524,6 +533,7 @@ app.post("/updateSchedule", function (req, res) {
         data.schedule.push(schedule1);
         data.save();
     });
+    res.render("doctorMainPage",{userName:doctorName, text:true})
 })
 
 
