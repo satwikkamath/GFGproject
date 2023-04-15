@@ -8,7 +8,7 @@ require('dotenv').config();
 
 //Connecting with MongoDB Database
 
-mongoose.connect(process.env.MONGODB_DATABASE_LINK, { useNewUrlParser: true }).catch(err => console.log(err));
+mongoose.connect(process.env.MONGODB_DATABASE_LINK, { useNewUrlParser: true });
 
 // Schedule template creation
 
