@@ -7,10 +7,10 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto" href="/userHome">Home</a></li>
+          <li><a class="nav-link scrollto " href="/userHome">Home</a></li>
           <li><a class="nav-link scrollto  " href="/doctorOnDemand">Doctor-On-Demand</a></li>
-          <li><a class="nav-link scrollto active" href="/clinicAppointment">Schedule Appointment</a></li>
-          <li><a class="nav-link scrollto" href="/myAppointments">My Appointments</a></li>
+          <li><a class="nav-link scrollto active " href="/clinicAppointment">Schedule Appointment</a></li>
+          <li><a class="nav-link scrollto " href="/myAppointments">My Appointments</a></li>
 
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -38,17 +38,17 @@
          
 
             
-              <div class="icon-boxes d-flex flex-column boxshadow ">
+              <div class="icon-boxes d-flex flex-column boxshadow">
                 <div class="icon-box mt-4 mt-xl-0">
 
                     
-                        <h3>Schedule Clinic Appointment</h3>
+                        <h3 class="reveal1">Schedule Clinic Appointment</h3>
                         <div class="form">
                           <form action="/clinicDoctorSearch" method="post">
-                            <div class="formContent">
+                            <div class="formContent reveal1">
                               Please fill out the form below to search for physicians and schedule appointments at their Clinics
                             </div>
-                            <div class="formContent">
+                            <div class="formContent reveal1">
                               Choose your area :
                               <select name="area" id="" class="form-select" aria-label="Default select example">
                                 <option value="Kengeri">Kengeri</option>
@@ -59,7 +59,7 @@
                               </select>
                             </div>
                   
-                            <div class="formContent">
+                            <div class="formContent reveal1">
                               Choose specialization of the doctor :
                               <select name="specialization" id="" class="form-select" aria-label="Default select example">
                                 <option value="Neurology">Neurology</option>
@@ -81,12 +81,12 @@
                                 <option value="Gynaecology">Gynaecology</option>
                               </select>
                             </div>
-                            <div class="form-floating">
+                            <div class="form-floating reveal1">
                               <textarea name="address" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
                               <label for="floatingTextarea2">Enter Your Address</label>
                             </div>
                             <br>
-                            <div class="button">
+                            <div class="button reveal1">
                               <button type="submit" class="allButtons">Search Doctors</button>
                             </div>
                           </form>
@@ -97,7 +97,7 @@
                                 <% clinicDoctorData.forEach(element=> {%>
                   
                                   <% let g=element.gender.charAt(0).toUpperCase() + element.gender.slice(1);%>
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 reveal1">
                                       <div class="card">
                                         <div class="card-body">
                   
@@ -202,7 +202,7 @@
                   
                   
                                                               <div class="form-check">
-                                                                <input class="form-check-input" name="slot" type="checkbox" value = <%= Slot1%> id="flexCheckDefault">
+                                                                <input class="form-check-input" name="slot" type="radio" value = <%= Slot1%> id="flexCheckDefault">
                                                                   
                   
                                                                 <label class="form-check-label" for="flexCheckDefault">
@@ -222,7 +222,7 @@
                                                                 <% if(ele.slot2==="Free" ){ %>
                                                                   <td>
                                                                     <div class="form-check">
-                                                                      <input class="form-check-input" name="slot" type="checkbox"
+                                                                      <input class="form-check-input" name="slot" type="radio"
                                                                         value=<%=Slot2 %> id="flexCheckDefault">
                   
                                                                       <label class="form-check-label" for="flexCheckDefault">
@@ -240,7 +240,7 @@
                                                                       <% if(ele.slot3==="Free" ){ %>
                                                                         <td>
                                                                           <div class="form-check">
-                                                                            <input class="form-check-input" name="slot" type="checkbox"
+                                                                            <input class="form-check-input" name="slot" type="radio"
                                                                               value= <%= Slot3 %> id="flexCheckDefault">
                   
                                                                             <label class="form-check-label" for="flexCheckDefault">

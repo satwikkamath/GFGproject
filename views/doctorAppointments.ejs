@@ -113,10 +113,11 @@
                                                                             : <%= element.status%>
                                                                         </div>
                                                                     </div>
+                                                                    <br>
                                                                     <form action="/approveAppointment" method="post">
                                                                         <button type="submit"
                                                                             class="allButtons">Approve</button>
-                                                                        <br><br>
+                                                                        <br>
                                                                         <input type="text" name="doctorName"
                                                                             value="<%= element.doctorName%>" hidden
                                                                             id="">
@@ -136,6 +137,7 @@
                                                                                 : <%= element.status%>
                                                                             </div>
                                                                         </div>
+                                                                        <br>
                                                                         <form action="/completedAppointment"
                                                                             method="post">
                                                                             <button type="submit"

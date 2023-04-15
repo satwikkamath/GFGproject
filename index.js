@@ -8,7 +8,7 @@ require('dotenv').config();
 
 //Connecting with MongoDB Database
 
-mongoose.connect(process.env.MONGODB_DATABASE_LINK, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_DATABASE_LINK, { useNewUrlParser: true }).catch(err => console.log(err));
 
 // Schedule template creation
 
@@ -123,7 +123,7 @@ app.post("/userSignUp", function (req, res) {
                     phoneNumber: receivedPhno,
                     age: receivedAge,
                     gender: receivedGender,
- 
+
                 })
                 user.save();
                 res.render("userLogin", { text: "Your account was succesfully created", passwordFail: false, notFound: false });
@@ -141,7 +141,7 @@ app.post("/userLogin", function (req, res) {
         if (user) {
             citizenName = user.name;
             if (pswd === user.password) {
-                res.render("userMainPage", { doctorName: false,userName: user.name});  // if password matched
+                res.render("userMainPage", { doctorName: false, userName: user.name });  // if password matched
             }
             else {
                 res.render("userLogin", { passwordFail: true, text: false, notFound: false });  // if password not matched
@@ -150,6 +150,8 @@ app.post("/userLogin", function (req, res) {
         else {
             res.render("userLogin", { passwordFail: false, text: false, notFound: true });  // if password not matched
         }
+    }).catch(function(err){
+        res.send(err);
     })
 })
 
@@ -161,12 +163,12 @@ app.post("/docLogin", function (req, res) {
     Doctor.findOne({ email: email }).then(function (user) {
         if (user) {
             doctorName = user.name;
-            
+
             if (pswd === user.password) {
                 // if password matched
-                
-                    res.render("doctorMainPage", { userName: doctorName, text:false});
-                
+
+                res.render("doctorMainPage", { userName: doctorName, text: false });
+
             }
             else {
                 res.render("docLogin", { text: "Wrong Password" });  // if password not matched
@@ -178,26 +180,26 @@ app.post("/docLogin", function (req, res) {
     })
 })
 
-app.get("/doctorAppointments",function(req,res){
+app.get("/doctorAppointments", function (req, res) {
     Appointment.find({ doctorName: doctorName }).then(function (data) {
         res.render("doctorAppointments", { userName: doctorName, patients: data });
     });
 
 })
 
-app.get("/doctorHome",function(req,res){
-    res.render("doctorMainPage", {userName:doctorName, text:false});
+app.get("/doctorHome", function (req, res) {
+    res.render("doctorMainPage", { userName: doctorName, text: false });
 })
-app.get("/userHome",function(req,res){
-    res.render("userMainPage", {userName:citizenName});
+app.get("/userHome", function (req, res) {
+    res.render("userMainPage", { userName: citizenName });
 })
-app.get("/doctorOnDemand",function(req,res){
-    res.render("doctorOnDemand",{homeDoctorData: false, docSchedule:false, userName:citizenName});
+app.get("/doctorOnDemand", function (req, res) {
+    res.render("doctorOnDemand", { homeDoctorData: false, docSchedule: false, userName: citizenName, repeat: false });
 })
 
 
-app.get("/clinicAppointment",function(req,res){
-    res.render("clinicAppointment",{clinicDoctorData: false, docSchedule:false, userName:citizenName});
+app.get("/clinicAppointment", function (req, res) {
+    res.render("clinicAppointment", { clinicDoctorData: false, docSchedule: false, userName: citizenName });
 })
 //Home doctor search
 let homeAppointMentAddress;
@@ -209,39 +211,38 @@ app.post("/homeDoctorSearch", function (req, res) {
 
     let today = new Date();
     let year = today.getFullYear();
-    let month = today.getMonth()+1;
+    let month = today.getMonth() + 1;
     let date = today.getDate();
-    let completeDate 
-    
-    if(month <10 && date <10 )
-    completeDate = year + "-0" + month + "-0" + date ;
-    else if(month <10 && date >=10 )
-    completeDate = year + "-0" + month + "-" + date ;
-    else if(month >=10 && date <10 )
-    completeDate = year + "-" + month + "-0" + date ;
-    else if(month <10 && date <10 )
-    completeDate = year + "-" + month + "-" + date ;
+    let completeDate
+
+    if (month < 10 && date < 10)
+        completeDate = year + "-0" + month + "-0" + date;
+    else if (month < 10 && date >= 10)
+        completeDate = year + "-0" + month + "-" + date;
+    else if (month >= 10 && date < 10)
+        completeDate = year + "-" + month + "-0" + date;
+    else if (month < 10 && date < 10)
+        completeDate = year + "-" + month + "-" + date;
 
     Doctor.find({ area: receivedArea, specialization: receivedSpecialization }).then(function (doctors) {
 
         doctors.forEach(element => {
-            
+
             element.schedule.forEach(ele => {
 
-                if(ele.date < completeDate)
-                {   
+                if (ele.date < completeDate) {
                     ele.date = " ";
                     ele.slot1 = " ";
-                    ele.slot2= " ";
+                    ele.slot2 = " ";
                     ele.slot3 = " ";
                 }
-                
+
             });
             element.save();
-            
+
         });
         setTimeout(() => {
-            res.render("doctorOnDemand", { homeDoctorData: doctors, userName: citizenName });
+            res.render("doctorOnDemand", { homeDoctorData: doctors, userName: citizenName, repeat: false });
         }, 1000);
     });
 });
@@ -255,42 +256,41 @@ app.post("/clinicDoctorSearch", function (req, res) {
 
     let today = new Date();
     let year = today.getFullYear();
-    let month = today.getMonth()+1;
+    let month = today.getMonth() + 1;
     let date = today.getDate();
-    let completeDate 
-    
-    if(month <10 && date <10 )
-    completeDate = year + "-0" + month + "-0" + date ;
-    else if(month <10 && date >=10 )
-    completeDate = year + "-0" + month + "-" + date ;
-    else if(month >=10 && date <10 )
-    completeDate = year + "-" + month + "-0" + date ;
-    else if(month <10 && date <10 )
-    completeDate = year + "-" + month + "-" + date ;
+    let completeDate
+
+    if (month < 10 && date < 10)
+        completeDate = year + "-0" + month + "-0" + date;
+    else if (month < 10 && date >= 10)
+        completeDate = year + "-0" + month + "-" + date;
+    else if (month >= 10 && date < 10)
+        completeDate = year + "-" + month + "-0" + date;
+    else if (month < 10 && date < 10)
+        completeDate = year + "-" + month + "-" + date;
 
     Doctor.find({ area: receivedArea, specialization: receivedSpecialization }).then(function (doctors) {
 
         doctors.forEach(element => {
-            
+
             element.schedule.forEach(ele => {
 
-                if(ele.date < completeDate)
-                {   
+                if (ele.date < completeDate) {
                     ele.date = " ";
                     ele.slot1 = " ";
-                    ele.slot2= " ";
+                    ele.slot2 = " ";
                     ele.slot3 = " ";
                 }
-                
+
             });
             element.save();
         });
         setTimeout(() => {
-            res.render("clinicAppointment", {clinicDoctorData: doctors, userName: citizenName });
+            res.render("clinicAppointment", { clinicDoctorData: doctors, userName: citizenName });
         }, 1000);
     });
 });
-            
+
 // Scheduling Home Appointment
 
 app.post("/scheduleHomeAppointment", function (req, res) {
@@ -311,18 +311,66 @@ app.post("/scheduleHomeAppointment", function (req, res) {
         else
             if (slot === "slot3")
                 Slot = "Slot 3";
+    const appointments = new Appointment({
+        doctorName: receivedDocName,
+        userName: citizenName,
+        status: "Pending",
+        date: date,
+        slot: Slot,
+        type: "Home",
+        address: homeAppointMentAddress
+    });
+
+
 
     // updating the slots
     Doctor.findOne({ name: receivedDocName }).then(function (datas) {
         console.log(datas);
         let c = -1;
         let index;
+        let x = 0;
         datas.schedule.forEach(element => {
             c++;
             if (element.date === date)
                 index = c;
 
-        });
+            if (slot === "slot1") {
+                if (element.date === date && (element.slot1 === "Busy")) {
+                    res.render("doctorOnDemand", { homeDoctorData: false, userName: citizenName, repeat: true })
+                }
+                else {
+                    console.log("this is slot 1");
+                    x = 1;
+                }
+            }
+
+            else
+                if (slot === "slot2") {
+                    if (element.date === date && (element.slot2 === "Busy")) {
+                        res.render("doctorOnDemand", { homeDoctorData: false, userName: citizenName, repeat: true })
+
+                    }
+                    else {
+                        x = 1;
+                        console.log("this is slot 2");
+                    }
+                }
+
+                else
+                    if (slot === "slot3") {
+                        if (element.date === date && (element.slot3 === "Busy")) {
+                            res.render("doctorOnDemand", { homeDoctorData: false, userName: citizenName, repeat: true })
+                        }
+                        else {
+                            x = 1;
+                            console.log("this is slot 3");
+                        }
+                    }
+       });
+
+        if (x === 1) {
+            appointments.save();
+        }
         if (slot === "slot1") {
             Slot = "Slot 1";
             datas.schedule[index]["slot1"] = "Busy";
@@ -342,17 +390,6 @@ app.post("/scheduleHomeAppointment", function (req, res) {
                 }
     })
 
-    const appointments = new Appointment({
-        doctorName: receivedDocName,
-        userName: citizenName,
-        status: "Pending",
-        date: date,
-        slot: Slot,
-        type: "Home",
-        address: homeAppointMentAddress
-    });
-
-    appointments.save();
     setTimeout(() => {
 
         Appointment.find({ userName: citizenName }).then(function (data) {
@@ -412,14 +449,14 @@ app.post("/scheduleClinicAppointment", function (req, res) {
                 }
     })
 
-   const appointments = new Appointment({
+    const appointments = new Appointment({
         doctorName: receivedDocName,
         userName: citizenName,
         status: "Pending",
         date: date,
         slot: Slot,
-        type:"Clinic",
-        address:clinicAppointMentAddress
+        type: "Clinic",
+        address: clinicAppointMentAddress
     });
 
     appointments.save();
@@ -455,7 +492,7 @@ app.post("/approveAppointment", function (req, res) {
 
         Appointment.find({ doctorName: doctorName }).then(function (data) {
 
-            res.render("doctorAppointments", { doctorName: doctorName, patients: data,text:false });
+            res.render("doctorAppointments", { doctorName: doctorName, patients: data, text: false });
         });
     }, 1000);  // 1 sec delay because data, which was recently saved was not readable 
 })
@@ -541,7 +578,7 @@ app.post("/updateSchedule", function (req, res) {
         data.schedule.push(schedule1);
         data.save();
     });
-    res.render("doctorMainPage",{userName:doctorName, text:true})
+    res.render("doctorMainPage", { userName: doctorName, text: true })
 })
 
 

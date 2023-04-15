@@ -12,10 +12,7 @@
                 <ul>
                     <li><a class="nav-link scrollto active" href="/doctorHome">Home</a></li>
                     <li><a class="nav-link scrollto" href="/doctorAppointments">My Appointments</a></li>
-                    
-
-
-                </ul>
+              </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
 
@@ -51,11 +48,11 @@
                                 Your Schedule Was Updated Succesfully !
                               </div>
                             <% } %>
-                            <h1>Update Schedule</h1> <br>
+                            <h1 class="reveal1">Update Schedule</h1> <br>
                             <form action="/updateSchedule" method="post">
                                 <input type="date" name="date" id=""> <br> <br>
 
-                                <div class="row">
+                                <div class="row reveal1">
                                     <div class="col-1">
                                         <strong>Slot 1 : </strong>
                                     </div>
@@ -67,7 +64,7 @@
                                     </div>
 
                                 </div> <br>
-                                <div class="row">
+                                <div class="row reveal1">
                                     <div class="col-1">
                                         <strong>Slot 2 : </strong>
                                     </div>
@@ -79,7 +76,7 @@
                                     </div>
 
                                 </div> <br>
-                                <div class="row">
+                                <div class="row reveal1">
                                     <div class="col-1">
                                         <strong>Slot 3 : </strong>
                                     </div>
@@ -96,7 +93,7 @@
                                  
                     
                                 <input type="text" name="doctorName" value="<%= doctorName %>" id="" hidden>
-                                <button class="allButtons" type="submit">Update Schedule </button>
+                                <button class="allButtons reveal1" type="submit">Update Schedule </button>
                             </form>
                         </div>
                     </div>
