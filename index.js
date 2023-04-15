@@ -8,7 +8,7 @@ require('dotenv').config();
 
 //Connecting with MongoDB Database
 
-mongoose.connect(process.env.MONGODB_DATABASE_LINK, { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://satwikroopa:Roopa70263@fruitdb.8sxipgz.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true });
 
 // Schedule template creation
 
