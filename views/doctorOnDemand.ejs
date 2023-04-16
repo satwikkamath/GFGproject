@@ -43,16 +43,16 @@
               <div class="icon-boxes d-flex flex-column boxshadow">
                 
                   
-                    <div class="icon-box mt-4 mt-xl-0">
+                    <div class="icon-box mt-4 mt-xl-0" style="padding-top: 30px;">
                        
-                            <h3 class="reveal1">Doctor On Demand</h3>
+                            <h3>Doctor On Demand</h3>
                             <div class="form">
                               <form action="/homeDoctorSearch" method="post">
                                 <% if(repeat){ %>
                                   <div class="alert alert-danger" role="alert">You cannot choose same slot twice
                                   </div>
                                   <% } %>
-                                <div class="formContent reveal1">
+                                <div class="formContent">
                                   Please fill out the form below to search for physicians and schedule appointments to have them visit
                                   your residence.
                                 </div>
@@ -84,14 +84,14 @@
                                     <option value="General Physician">General Physician</option>
                                     <option value="Ayurveda">Ayurveda</option>
                                     <option value="Nutritionist">Nutritionist</option>
-                                    <option value="Psychology">Psychology</option>
+
                                     <option value="Cardiology">Cardiology</option>
                                     <option value="Gynaecology">Gynaecology</option>
                                   </select>
                                 </div>
-                                <div class="form-floating reveal1">
-                                  <textarea name="address" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
-                                  <label for="floatingTextarea2">Enter Your Address</label>
+                                <div class="mb-3 reveal1">
+                                  <label for="exampleFormControlTextarea1" class="form-label">Enter Your Address :</label>
+                                  <textarea class="form-control" name="address" id="exampleFormControlTextarea1" rows="3" required></textarea>
                                 </div>
                                 <br>
                       
@@ -178,6 +178,9 @@
                                               </div>
                                               <div class="formContent">
                                                <strong>Choose a preferred slot </strong> 
+                                               <div>Slot 1 : 9 A.M to 12 P.M</div>
+                                               <div>Slot 2 : 1 P.M to 4 P.M</div>
+                                               <div>Slot 3 : 5 P.M to 8 P.M</div>
                                               </div>
                       
                       

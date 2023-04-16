@@ -160,3 +160,7 @@ input[type="date"]{
     transform: translateX(0);
     opacity: 1;
 }
+
+.icon-box{
+    padding-top: 30px;
+}
