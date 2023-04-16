@@ -582,7 +582,8 @@ app.post("/updateSchedule", function (req, res) {
 })
 
 
+const PORT = process.env.PORT || 8080;
 
-app.listen(3000, function () {
-    console.log("Server running on port 3000");
+app.listen(PORT, function () {
+    console.log("Server running");
 })
