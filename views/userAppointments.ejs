@@ -9,13 +9,29 @@
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto" href="/userHome">Home</a></li>
-                    <li><a class="nav-link scrollto" href="/doctorOnDemand">Doctor-On-Demand</a></li>
-                    <li><a class="nav-link scrollto" href="/clinicAppointment">Schedule Appointment</a></li>
-                    <li><a class="nav-link scrollto   active" href="/myAppointments">My Appointments</a></li>
-          
-
-                </ul>
+                    <li>
+                      <form id="userHome" action="/userHome" method="post"><a class="nav-link scrollto "
+                          href="javascript:document.getElementById('userHome').submit();">Home</a><input type="text"
+                          name="userName" value="<%= userName %>" id="" hidden> </form>
+                    </li>
+                    <li>
+                      <form id="doctorOnDemand" action="/doctorOnDemand" method="post"><a class="nav-link scrollto  "
+                          href="javascript:document.getElementById('doctorOnDemand').submit();">Doctor-On-Demand</a><input
+                          type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
+                    </li>
+                    <li>
+                      <form id="clinicAppointment" action="/clinicAppointment" method="post"><a
+                          class="nav-link scrollto"
+                          href="javascript:document.getElementById('clinicAppointment').submit();">Schedule
+                          Appointment</a><input type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
+                    </li>
+                    <li>
+                      <form id="myAppointments" action="/myAppointments" method="post"><a class="nav-link scrollto active"
+                          href="javascript:document.getElementById('myAppointments').submit();">My Appointments</a><input
+                          type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
+                    </li>
+        
+                  </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
 

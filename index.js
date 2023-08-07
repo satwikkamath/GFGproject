@@ -45,7 +45,6 @@ const userSchema = new mongoose.Schema({
     phoneNumber: Number,
     age: Number,
     gender: String,
-
 })
 
 //Appointment Template Creation
@@ -150,7 +149,7 @@ app.post("/userLogin", function (req, res) {
         else {
             res.render("userLogin", { passwordFail: false, text: false, notFound: true });  // if password not matched
         }
-    }).catch(function(err){
+    }).catch(function (err) {
         res.send(err);
     })
 })
@@ -190,24 +189,28 @@ app.get("/doctorAppointments", function (req, res) {
 app.get("/doctorHome", function (req, res) {
     res.render("doctorMainPage", { userName: doctorName, text: false });
 })
-app.get("/userHome", function (req, res) {
-    res.render("userMainPage", { userName: citizenName });
+app.post("/userHome", function (req, res) {
+    const receivedUserName = req.body.userName
+    res.render("userMainPage", { userName: receivedUserName });
 })
-app.get("/doctorOnDemand", function (req, res) {
-    res.render("doctorOnDemand", { homeDoctorData: false, docSchedule: false, userName: citizenName, repeat: false });
+app.post("/doctorOnDemand", function (req, res) {
+    const receivedUserName = req.body.userName
+    res.render("doctorOnDemand", { homeDoctorData: false, docSchedule: false, userName: receivedUserName, repeat: false });
 })
 
 
-app.get("/clinicAppointment", function (req, res) {
-    res.render("clinicAppointment", { clinicDoctorData: false, docSchedule: false, userName: citizenName });
+app.post("/clinicAppointment", function (req, res) {
+    const receivedUserName = req.body.userName
+    res.render("clinicAppointment", { clinicDoctorData: false, docSchedule: false, userName: receivedUserName,repeat:false });
 })
 //Home doctor search
-let homeAppointMentAddress;
-let clinicAppointMentAddress;
+// let homeAppointMentAddress;
+
 app.post("/homeDoctorSearch", function (req, res) {
+    const receivedUserName = req.body.userName
     const receivedArea = req.body.area;
     const receivedSpecialization = req.body.specialization;
-    homeAppointMentAddress = req.body.address;
+    const homeAppointmentAddress = req.body.address;
 
     let today = new Date();
     let year = today.getFullYear();
@@ -242,7 +245,7 @@ app.post("/homeDoctorSearch", function (req, res) {
 
         });
         setTimeout(() => {
-            res.render("doctorOnDemand", { homeDoctorData: doctors, userName: citizenName, repeat: false });
+            res.render("doctorOnDemand", { homeDoctorData: doctors, userName: receivedUserName, repeat: false , homeAppointmentAddress:homeAppointmentAddress});
         }, 1000);
     });
 });
@@ -250,9 +253,10 @@ app.post("/homeDoctorSearch", function (req, res) {
 // Clinic Doctor Search
 
 app.post("/clinicDoctorSearch", function (req, res) {
+    const receivedUserName = req.body.userName
     const receivedArea = req.body.area;
     const receivedSpecialization = req.body.specialization;
-    clinicAppointMentAddress = req.body.address;
+    const clinicAppointmentAddress = req.body.address;
 
     let today = new Date();
     let year = today.getFullYear();
@@ -286,7 +290,7 @@ app.post("/clinicDoctorSearch", function (req, res) {
             element.save();
         });
         setTimeout(() => {
-            res.render("clinicAppointment", { clinicDoctorData: doctors, userName: citizenName });
+            res.render("clinicAppointment", { clinicDoctorData: doctors, userName: receivedUserName, repeat:false, clinicAppointmentAddress:clinicAppointmentAddress });
         }, 1000);
     });
 });
@@ -296,7 +300,8 @@ app.post("/clinicDoctorSearch", function (req, res) {
 app.post("/scheduleHomeAppointment", function (req, res) {
     const receivedSlot = req.body.slot;
     const receivedDocName = req.body.doctorName;
-
+    const receivedUserName = req.body.userName;
+    const receivedAddress= req.body.homeAppointmentAddress;
 
     const date = receivedSlot.slice(0, 10);
     const slot = receivedSlot.slice(10, 15);
@@ -313,12 +318,12 @@ app.post("/scheduleHomeAppointment", function (req, res) {
                 Slot = "Slot 3";
     const appointments = new Appointment({
         doctorName: receivedDocName,
-        userName: citizenName,
+        userName: receivedUserName,
         status: "Pending",
         date: date,
         slot: Slot,
         type: "Home",
-        address: homeAppointMentAddress
+        address: receivedAddress
     });
 
 
@@ -336,7 +341,7 @@ app.post("/scheduleHomeAppointment", function (req, res) {
 
             if (slot === "slot1") {
                 if (element.date === date && (element.slot1 === "Busy")) {
-                    res.render("doctorOnDemand", { homeDoctorData: false, userName: citizenName, repeat: true })
+                    res.render("doctorOnDemand", { homeDoctorData: false, userName: receivedUserName, repeat: true })
                 }
                 else {
                     console.log("this is slot 1");
@@ -347,7 +352,7 @@ app.post("/scheduleHomeAppointment", function (req, res) {
             else
                 if (slot === "slot2") {
                     if (element.date === date && (element.slot2 === "Busy")) {
-                        res.render("doctorOnDemand", { homeDoctorData: false, userName: citizenName, repeat: true })
+                        res.render("doctorOnDemand", { homeDoctorData: false, userName: receivedUserName, repeat: true })
 
                     }
                     else {
@@ -359,14 +364,14 @@ app.post("/scheduleHomeAppointment", function (req, res) {
                 else
                     if (slot === "slot3") {
                         if (element.date === date && (element.slot3 === "Busy")) {
-                            res.render("doctorOnDemand", { homeDoctorData: false, userName: citizenName, repeat: true })
+                            res.render("doctorOnDemand", { homeDoctorData: false, userName: receivedUserName, repeat: true })
                         }
                         else {
                             x = 1;
                             console.log("this is slot 3");
                         }
                     }
-       });
+        });
 
         if (x === 1) {
             appointments.save();
@@ -392,8 +397,8 @@ app.post("/scheduleHomeAppointment", function (req, res) {
 
     setTimeout(() => {
 
-        Appointment.find({ userName: citizenName }).then(function (data) {
-            res.render("userAppointments", { doctors: data, userName: citizenName });
+        Appointment.find({ userName: receivedUserName }).then(function (data) {
+            res.render("userAppointments", { doctors: data, userName: receivedUserName });
         });
     }, 1000);
 });
@@ -403,6 +408,8 @@ app.post("/scheduleHomeAppointment", function (req, res) {
 app.post("/scheduleClinicAppointment", function (req, res) {
     const receivedSlot = req.body.slot;
     const receivedDocName = req.body.doctorName;
+    const receivedUserName = req.body.userName;
+    const receivedAddress= req.body.clinicAppointmentAddress;
 
 
     const date = receivedSlot.slice(0, 10);
@@ -424,12 +431,48 @@ app.post("/scheduleClinicAppointment", function (req, res) {
         console.log(datas);
         let c = -1;
         let index;
+        let x=0;
         datas.schedule.forEach(element => {
             c++;
             if (element.date === date)
                 index = c;
+            if (slot === "slot1") {
+                if (element.date === date && (element.slot1 === "Busy")) {
+                    res.render("clinicAppointment", { clinicDoctorData: false, userName: receivedUserName, repeat: true })
+                }
+                else {
+                    console.log("this is slot 1");
+                    x = 1;
+                }
+            }
+
+            else
+                if (slot === "slot2") {
+                    if (element.date === date && (element.slot2 === "Busy")) {
+                        res.render("clinicAppointment", { clinicDoctorData: false, userName: receivedUserName, repeat: true })
+
+                    }
+                    else {
+                        x = 1;
+                        console.log("this is slot 2");
+                    }
+                }
+
+                else
+                    if (slot === "slot3") {
+                        if (element.date === date && (element.slot3 === "Busy")) {
+                            res.render("clinicAppointment", { clinicDoctorData: false, userName: receivedUserName, repeat: true })
+                        }
+                        else {
+                            x = 1;
+                            console.log("this is slot 3");
+                        }
+                    }
 
         });
+        if (x === 1) {
+            appointments.save();
+        }
         if (slot === "slot1") {
             Slot = "Slot 1";
             datas.schedule[index]["slot1"] = "Busy";
@@ -451,28 +494,29 @@ app.post("/scheduleClinicAppointment", function (req, res) {
 
     const appointments = new Appointment({
         doctorName: receivedDocName,
-        userName: citizenName,
+        userName: receivedUserName,
         status: "Pending",
         date: date,
         slot: Slot,
         type: "Clinic",
-        address: clinicAppointMentAddress
+        address: receivedAddress
     });
 
-    appointments.save();
+   
     setTimeout(() => {
 
-        Appointment.find({ userName: citizenName }).then(function (data) {
-            res.render("userAppointments", { doctors: data, userName: citizenName });
+        Appointment.find({ userName: receivedUserName }).then(function (data) {
+            res.render("userAppointments", { doctors: data, userName: receivedUserName });
         });
     }, 1000);
 });
 
 // User Appointments
 
-app.get("/myAppointments", function (req, res) {
-    Appointment.find({ userName: citizenName }).then(function (data) {
-        res.render("userAppointments", { doctors: data, userName: citizenName });
+app.post("/myAppointments", function (req, res) {
+    const receivedUserName = req.body.userName
+    Appointment.find({ userName: receivedUserName }).then(function (data) {
+        res.render("userAppointments", { doctors: data, userName: receivedUserName });
     });
 });
 
@@ -582,7 +626,7 @@ app.post("/updateSchedule", function (req, res) {
 })
 
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function () {
     console.log("Server running");
