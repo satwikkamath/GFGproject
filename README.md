@@ -2,7 +2,7 @@
 
 CarePoint is a comprehensive web-based healthcare management platform that offers a seamless and efficient experience for both doctors and patients. This platform features two distinct logins, one for doctors and another for patients, each with specific capabilities tailored to their respective needs.
 
-## Patient Features:
+## Patient Login Features:
 
 **User-Friendly Dashboard**: Upon logging in, patients are greeted with a user-friendly dashboard that provides quick access to essential features.
 
@@ -16,7 +16,7 @@ CarePoint is a comprehensive web-based healthcare management platform that offer
 
 
 
-## Doctor Features:
+## Doctor Login Features:
 **Personalized Schedule Management**: Doctors can efficiently manage their schedules, making it easy to allocate time for appointments and other professional commitments.
 
 **Appointment Approval**: When a patient schedules an appointment, doctors receive notifications and have the authority to approve or reschedule appointments as needed. This ensures that doctors can maintain control over their availability.
