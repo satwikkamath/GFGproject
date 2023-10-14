@@ -32,9 +32,3 @@ https://github.com/satwikkamath/GFGproject/assets/107809929/b615abbd-16ca-45ef-8
 2. Run the command: `npm install` in your terminal.
 3. Run the command: `node index.js`. If you have nodemon installed, use `nodemon index.js`.
 4. Open your web browser and navigate to `localhost:3000`.
-
-
-
-
-
-
