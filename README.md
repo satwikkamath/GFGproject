@@ -2,6 +2,10 @@
 
 CarePoint is a comprehensive web-based healthcare management platform that prioritizes the seamless and efficient experience of both doctors and patients. This platform offers distinct logins for doctors and patients, each with tailored capabilities to meet their specific needs.
 
+## Overview:
+
+The CarePoint project was developed as part of the GeeksforGeeks (GFG) hackathon, where it aimed to address the critical challenges in healthcare management.
+
 ## Features
 ### Patient Login 👩‍⚕️📅
 - **User-Friendly Dashboard** 🏠: A welcoming dashboard provides quick access to essential features for patients.
